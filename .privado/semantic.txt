@@ -1,0 +1,218 @@
+Custom Non taint default semantics
+"info.zamojski.soft.towercollector.enums.NetworkGroup.ordinal:int()" 0->0 1->1
+"info.zamojski.soft.towercollector.files.generators.wrappers.CsvTextGeneratorWrapper.generate.FileWriter$0.notifyProgressListeners:void(int,int)" 0->0 1->1 2->2 3->3
+"info.zamojski.soft.towercollector.files.generators.wrappers.GpxTextGeneratorWrapper.generate.FileWriter$0.notifyProgressListeners:void(int,int)" 0->0 1->1 2->2 3->3
+"info.zamojski.soft.towercollector.files.generators.wrappers.JsonTextGeneratorWrapper.generate.FileWriter$0.notifyProgressListeners:void(int,int)" 0->0 1->1 2->2 3->3
+"info.zamojski.soft.towercollector.files.generators.wrappers.KmlTextGeneratorWrapper.generate.FileWriter$0.notifyProgressListeners:void(int,int)" 0->0 1->1 2->2 3->3
+"java.io.BufferedOutputStream.flush:void()" 0->0 1->1
+"java.io.BufferedOutputStream.write:void(byte[],int,int)" 0->0 1->1 2->2 3->3 4->4
+"java.io.BufferedWriter.write:void(java.lang.String)" 0->0 1->1 2->2
+"java.io.ByteArrayOutputStream.flush:void()" 0->0 1->1
+"java.io.ByteArrayOutputStream.write:void(int)" 0->0 1->1 2->2
+"java.io.File.canRead:boolean()" 0->0 1->1
+"java.io.File.delete:boolean()" 0->0 1->1
+"java.io.File.exists:boolean()" 0->0 1->1
+"java.io.File.isDirectory:boolean()" 0->0 1->1
+"java.io.InputStream.close:void()" 0->0 1->1
+"java.io.InputStream.read:int()" 0->0 1->1
+"java.io.InputStream.read:int(byte[])" 0->0 1->1 2->2
+"java.io.OutputStream.flush:void()" 0->0 1->1
+"java.io.OutputStream.write:void(byte[],int,int)" 0->0 1->1 2->2 3->3 4->4
+"java.io.OutputStreamWriter.close:void()" 0->0 1->1
+"java.io.OutputStreamWriter.flush:void()" 0->0 1->1
+"java.io.PrintStream.close:void()" 0->0 1->1
+"java.io.Writer.flush:void()" 0->0 1->1
+"java.io.Writer.write:void(char[],int,int)" 0->0 1->1 2->2 3->3 4->4
+"java.lang.Boolean.parseBoolean:boolean(java.lang.String)" 0->0 1->1
+"java.lang.CharSequence.equals:boolean(java.lang.Object)" 0->0 1->1 2->2
+"java.lang.Integer.intValue:int()" 0->0 1->1
+"java.lang.Integer.longValue:long()" 0->0 1->1
+"java.lang.Integer.parseInt:int(java.lang.String)" 0->0 1->1
+"java.lang.Integer.parseInt:int(java.lang.String,int)" 0->0 1->1 2->2
+"java.lang.Long.longValue:long()" 0->0 1->1
+"java.lang.Long.parseLong:long(java.lang.String)" 0->0 1->1
+"java.lang.Long.parseLong:long(java.lang.String,int)" 0->0 1->1 2->2
+"java.lang.Math.abs:long(long)" 0->0 1->1
+"java.lang.Math.max:int(int,int)" 0->0 1->1 2->2
+"java.lang.Math.min:int(int,int)" 0->0 1->1 2->2
+"java.lang.Math.round:long(double)" 0->0 1->1
+"java.lang.String.contains:boolean(java.lang.CharSequence)" 0->0 1->1 2->2
+"java.lang.String.endsWith:boolean(java.lang.String)" 0->0 1->1 2->2
+"java.lang.String.equals:boolean(java.lang.Object)" 0->0 1->1 2->2
+"java.lang.String.equalsIgnoreCase:boolean(java.lang.String)" 0->0 1->1 2->2
+"java.lang.String.isEmpty:boolean()" 0->0 1->1
+"java.lang.String.lastIndexOf:int(int)" 0->0 1->1 2->2
+"java.lang.String.length:int()" 0->0 1->1
+"java.lang.String.matches:boolean(java.lang.String)" 0->0 1->1 2->2
+"java.lang.String.startsWith:boolean(java.lang.String)" 0->0 1->1 2->2
+"java.lang.System.arraycopy:void(java.lang.Object,int,java.lang.Object,int,int)" 0->0 1->1 2->2 3->3 4->4 5->5
+"java.lang.System.currentTimeMillis:long()" 0->0
+"java.lang.Thread$UncaughtExceptionHandler.uncaughtException:void(java.lang.Thread,java.lang.Throwable)" 0->0 1->1 2->2 3->3
+"java.lang.Thread.start:void()" 0->0 1->1
+"java.lang.Throwable.printStackTrace:void(java.io.PrintStream)" 0->0 1->1 2->2
+"java.nio.ByteBuffer.position:int()" 0->0 1->1
+"java.nio.charset.CoderResult.isError:boolean()" 0->0 1->1
+"java.nio.charset.CoderResult.isOverflow:boolean()" 0->0 1->1
+"java.util.Iterator.hasNext:boolean()" 0->0 1->1
+"java.util.List.clear:void()" 0->0 1->1
+"java.util.List.contains:boolean(java.lang.Object)" 0->0 1->1 2->2
+"java.util.List.isEmpty:boolean()" 0->0 1->1
+"java.util.List.remove:boolean(java.lang.Object)" 0->0 1->1 2->2
+"java.util.List.size:int()" 0->0 1->1
+"java.util.Map.containsKey:boolean(java.lang.Object)" 0->0 1->1 2->2
+"java.util.Set.contains:boolean(java.lang.Object)" 0->0 1->1 2->2
+"java.util.Timer.cancel:void()" 0->0 1->1
+"java.util.Timer.schedule:void(java.util.TimerTask,long,long)" 0->0 1->1 2->2 3->3 4->4
+"java.util.concurrent.TimeUnit.toDays:long(long)" 0->0 1->1 2->2
+"java.util.zip.GZIPOutputStream.flush:void()" 0->0 1->1
+"java.util.zip.GZIPOutputStream.write:void(byte[],int,int)" 0->0 1->1 2->2 3->3 4->4
+"javax.net.ssl.SSLContext.init:void(javax.net.ssl.KeyManager[],javax.net.ssl.TrustManager[],java.security.SecureRandom)" 0->0 1->1 2->2 3->3 4->4
+"javax.net.ssl.TrustManagerFactory.init:void(java.security.KeyStore)" 0->0 1->1 2->2
+------------------------------------------
+Custom semanticFromConfig semantics
+"android.text.TextUtils.isEmpty:<unresolvedSignature>(1)"
+"android.text.TextUtils.isEmpty:boolean(java.lang.String)"
+"com.braintreepayments.api.models.PaymentMethodNonce.getNonce:<unresolvedSignature>(0)" 0->-1
+"com.braintreepayments.api.models.PaymentMethodNonce.getNonce:java.lang.String()" 0->-1
+"java.lang.String.replace:java.lang.String(java.lang.CharSequence,java.lang.CharSequence)" 0->-1 1->-1 2->-1
+"java.lang.String.split:java.lang.String[](java.lang.String)" 0->-1 1->-1
+"javax.persistence.EntityManager.find:<unresolvedSignature>(2)" 0->-1 1->-1 2->-1
+"javax.persistence.Query.setParameter:<unresolvedSignature>(2)" 1->0 2->0
+"org.apache.http.HttpResponse.getStatusLine:<unresolvedSignature>(0)" 0->0
+"org.apache.http.HttpResponse.getStatusLine:org.apache.http.StatusLine()" 0->0
+"org.apache.http.StatusLine.getStatusCode:<unresolvedSignature>(0)"
+"org.apache.http.StatusLine.getStatusCode:boolean()"
+------------------------------------------
+Custom customNonPersonalMemberSemantics semantics
+"info.zamojski.soft.towercollector.model.MapMeasurement.getCells:java.util.List()" 0->0
+"info.zamojski.soft.towercollector.model.MapMeasurement.getMeasuredAt:long()" 0->0
+"info.zamojski.soft.towercollector.model.MapMeasurement.setLatitude:<unresolvedSignature>(1)" 0->0 1->0 1->1
+"info.zamojski.soft.towercollector.model.MapMeasurement.setLatitude:void(double)" 0->0 1->0 1->1
+"info.zamojski.soft.towercollector.model.MapMeasurement.setLongitude:<unresolvedSignature>(1)" 0->0 1->0 1->1
+"info.zamojski.soft.towercollector.model.MapMeasurement.setLongitude:void(double)" 0->0 1->0 1->1
+"info.zamojski.soft.towercollector.model.MapMeasurement.setMeasuredAt:<unresolvedSignature>(1)" 0->0 1->1
+"info.zamojski.soft.towercollector.model.MapMeasurement.setMeasuredAt:void(long)" 0->0 1->1
+"info.zamojski.soft.towercollector.model.Measurement.getCells:java.util.List()" 0->0
+"info.zamojski.soft.towercollector.model.Measurement.getGpsAccuracy:float()" 0->0
+"info.zamojski.soft.towercollector.model.Measurement.getGpsAltitude:double()" 0->0
+"info.zamojski.soft.towercollector.model.Measurement.getGpsBearing:float()" 0->0
+"info.zamojski.soft.towercollector.model.Measurement.getGpsSpeed:float()" 0->0
+"info.zamojski.soft.towercollector.model.Measurement.getMeasuredAt:long()" 0->0
+"info.zamojski.soft.towercollector.model.Measurement.getMeasurementId:int()" 0->0
+"info.zamojski.soft.towercollector.model.Measurement.getUploadedToMlsAt:java.lang.Long()" 0->0
+"info.zamojski.soft.towercollector.model.Measurement.getUploadedToOcidAt:java.lang.Long()" 0->0
+"info.zamojski.soft.towercollector.model.Measurement.setGpsAccuracy:void(float)" 0->0 1->1
+"info.zamojski.soft.towercollector.model.Measurement.setGpsAltitude:void(double)" 0->0 1->1
+"info.zamojski.soft.towercollector.model.Measurement.setGpsBearing:void(float)" 0->0 1->1
+"info.zamojski.soft.towercollector.model.Measurement.setGpsSpeed:void(float)" 0->0 1->1
+"info.zamojski.soft.towercollector.model.Measurement.setLatitude:<unresolvedSignature>(1)" 0->0 1->0 1->1
+"info.zamojski.soft.towercollector.model.Measurement.setLatitude:void(double)" 0->0 1->0 1->1
+"info.zamojski.soft.towercollector.model.Measurement.setLongitude:<unresolvedSignature>(1)" 0->0 1->0 1->1
+"info.zamojski.soft.towercollector.model.Measurement.setLongitude:void(double)" 0->0 1->0 1->1
+"info.zamojski.soft.towercollector.model.Measurement.setMeasuredAt:<unresolvedSignature>(1)" 0->0 1->1
+"info.zamojski.soft.towercollector.model.Measurement.setMeasuredAt:void(long)" 0->0 1->1
+"info.zamojski.soft.towercollector.model.Measurement.setMeasurementId:void(int)" 0->0 1->1
+"info.zamojski.soft.towercollector.model.Measurement.setUploadedToMlsAt:void(java.lang.Long)" 0->0 1->1
+"info.zamojski.soft.towercollector.model.Measurement.setUploadedToOcidAt:void(java.lang.Long)" 0->0 1->1
+------------------------------------------
+Custom specialNonTaintDefaultSemantics semantics
+"info.zamojski.soft.towercollector.io.filesystem.WriteResult.getFilePath:void()" 0->0 1->0 1->1
+"info.zamojski.soft.towercollector.providers.preferences.PreferencesProvider.getStorageUri:void()" 0->0 1->0 1->1
+"java.lang.String.getChars:void(int,int,char[],int)" 0->0 1->0 1->1 2->0 2->2 3->0 3->3 4->0 4->4 5->0 5->5
+"java.lang.Thread.setDefaultUncaughtExceptionHandler:void(java.lang.Thread$UncaughtExceptionHandler)" 0->0 1->0 1->1
+"java.text.NumberFormat.setGroupingUsed:void(boolean)" 0->0 1->0 1->1 2->0 2->2
+"java.text.NumberFormat.setMaximumFractionDigits:void(int)" 0->0 1->0 1->1 2->0 2->2
+"java.text.NumberFormat.setMinimumFractionDigits:void(int)" 0->0 1->0 1->1 2->0 2->2
+"java.util.ArrayList.add:boolean(java.lang.Object)" 0->0 1->0 1->1 2->0 2->2
+"java.util.Calendar.add:void(int,int)" 0->0 1->0 1->1 2->0 2->2 3->0 3->3
+"java.util.Calendar.get:int(int)" 0->0 1->0 1->1 2->0 2->2
+"java.util.Calendar.getTimeInMillis:long()" 0->0 1->0 1->1
+"java.util.Calendar.set:void(int,int)" 0->0 1->0 1->1 2->0 2->2 3->0 3->3
+"java.util.Calendar.setTime:void(java.util.Date)" 0->0 1->0 1->1 2->0 2->2
+"java.util.Calendar.setTimeZone:void(java.util.TimeZone)" 0->0 1->0 1->1 2->0 2->2
+"java.util.Date.getTime:long()" 0->0 1->0 1->1
+"java.util.HashSet.add:boolean(java.lang.Object)" 0->0 1->0 1->1 2->0 2->2
+"java.util.List.add:boolean(java.lang.Object)" 0->0 1->0 1->1 2->0 2->2
+"java.util.List.addAll:boolean(java.util.Collection)" 0->0 1->0 1->1 2->0 2->2
+"java.util.Set.add:boolean(java.lang.Object)" 0->0 1->0 1->1 2->0 2->2
+"java.util.concurrent.atomic.AtomicBoolean.get:boolean()" 0->0 1->0 1->1
+"java.util.concurrent.atomic.AtomicBoolean.set:void(boolean)" 0->0 1->0 1->1 2->0 2->2
+"java.util.zip.ZipOutputStream.putNextEntry:void(java.util.zip.ZipEntry)" 0->0 1->0 1->1 2->0 2->2
+"javax.net.ssl.SSLSocket.setEnabledProtocols:void(java.lang.String[])" 0->0 1->0 1->1 2->0 2->2
+------------------------------------------
+Custom customSinkSemantics semantics
+"<unresolvedNamespace>.NotificationCompat.Builder.setContentText:<unresolvedSignature>(1)" 0->-1 0->0 1->-1 1->1
+"<unresolvedNamespace>.NotificationCompat.Builder.setContentTitle:<unresolvedSignature>(1)" 0->-1 0->0 1->-1 1->1
+"android.database.sqlite.SQLiteDatabase.delete:<unresolvedSignature>(3)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3
+"android.database.sqlite.SQLiteDatabase.execSQL:<unresolvedSignature>(1)" 0->-1 0->0 1->-1 1->1
+"android.database.sqlite.SQLiteDatabase.insert:<unresolvedSignature>(3)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3
+"android.database.sqlite.SQLiteDatabase.rawQuery:<unresolvedSignature>(2)" 0->-1 0->0 1->-1 1->1 2->-1 2->2
+"android.database.sqlite.SQLiteDatabase.update:<unresolvedSignature>(4)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3 4->-1 4->4
+"android.util.Log.e:<unresolvedSignature>(3)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3
+"android.util.Log.i:<unresolvedSignature>(2)" 0->-1 0->0 1->-1 1->1 2->-1 2->2
+"android.util.Log.w:<unresolvedSignature>(2)" 0->-1 0->0 1->-1 1->1 2->-1 2->2
+"com.google.firebase.analytics.FirebaseAnalytics.getInstance:<unresolvedSignature>(1)" 0->-1 0->0 1->-1 1->1
+"com.google.firebase.analytics.FirebaseAnalytics.logEvent:<unresolvedSignature>(2)" 0->-1 0->0 1->-1 1->1 2->-1 2->2
+"com.google.firebase.analytics.FirebaseAnalytics.setAnalyticsCollectionEnabled:<unresolvedSignature>(1)" 0->-1 0->0 1->-1 1->1
+"com.google.firebase.analytics.FirebaseAnalytics.setUserProperty:<unresolvedSignature>(2)" 0->-1 0->0 1->-1 1->1 2->-1 2->2
+"okhttp3.OkHttpClient.newCall:<unresolvedSignature>(1)" 0->-1 0->0 1->-1 1->1
+"timber.log.Timber.d:<unresolvedSignature>(1)" 0->-1 0->0 1->-1 1->1
+"timber.log.Timber.d:<unresolvedSignature>(2)" 0->-1 0->0 1->-1 1->1 2->-1 2->2
+"timber.log.Timber.d:<unresolvedSignature>(3)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3
+"timber.log.Timber.d:<unresolvedSignature>(4)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3 4->-1 4->4
+"timber.log.Timber.d:<unresolvedSignature>(5)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3 4->-1 4->4 5->-1 5->5
+"timber.log.Timber.e:<unresolvedSignature>(1)" 0->-1 0->0 1->-1 1->1
+"timber.log.Timber.e:<unresolvedSignature>(2)" 0->-1 0->0 1->-1 1->1 2->-1 2->2
+"timber.log.Timber.e:<unresolvedSignature>(3)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3
+"timber.log.Timber.e:<unresolvedSignature>(4)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3 4->-1 4->4
+"timber.log.Timber.i:<unresolvedSignature>(1)" 0->-1 0->0 1->-1 1->1
+"timber.log.Timber.i:<unresolvedSignature>(2)" 0->-1 0->0 1->-1 1->1 2->-1 2->2
+"timber.log.Timber.i:<unresolvedSignature>(3)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3
+"timber.log.Timber.i:<unresolvedSignature>(4)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3 4->-1 4->4
+"timber.log.Timber.w:<unresolvedSignature>(1)" 0->-1 0->0 1->-1 1->1
+"timber.log.Timber.w:<unresolvedSignature>(2)" 0->-1 0->0 1->-1 1->1 2->-1 2->2
+"timber.log.Timber.w:<unresolvedSignature>(3)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3
+"timber.log.Timber.w:<unresolvedSignature>(4)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3 4->-1 4->4
+"timber.log.Timber.w:<unresolvedSignature>(5)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3 4->-1 4->4 5->-1 5->5
+"timber.log.Timber.w:<unresolvedSignature>(6)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3 4->-1 4->4 5->-1 5->5 6->-1 6->6
+------------------------------------------
+Custom customStringSemantics semantics
+"info.zamojski.soft.towercollector.analytics.IntentSource.name:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"info.zamojski.soft.towercollector.analytics.IntentSource.toString:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"info.zamojski.soft.towercollector.enums.ExportAction.toString:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"info.zamojski.soft.towercollector.enums.FileType.name:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"info.zamojski.soft.towercollector.enums.GpsStatus.toString:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"info.zamojski.soft.towercollector.enums.MeansOfTransport.name:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.io.ByteArrayOutputStream.toString:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.io.File.getName:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.io.File.toString:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.lang.Boolean.toString:java.lang.String(boolean)" 0->-1 0->0 1->-1 1->1
+"java.lang.CharSequence.toString:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.lang.Class.getCanonicalName:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.lang.Class.getName:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.lang.Class.getSimpleName:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.lang.Exception.getMessage:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.lang.Exception.toString:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.lang.Integer.toString:java.lang.String(int)" 0->-1 0->0 1->-1 1->1
+"java.lang.Long.toString:java.lang.String(long)" 0->-1 0->0 1->-1 1->1
+"java.lang.Object.toString:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.lang.RuntimeException.getMessage:java.lang.String()" 0->-1 0->0
+"java.lang.String.format:java.lang.String(java.lang.String,java.lang.Object[])" 0->-1 0->0 1->-1 1->1 2->-1 2->2
+"java.lang.String.format:java.lang.String(java.util.Locale,java.lang.String,java.lang.Object[])" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3
+"java.lang.String.substring:java.lang.String(int)" 0->-1 0->0 1->-1 1->1 2->-1 2->2
+"java.lang.String.substring:java.lang.String(int,int)" 0->-1 0->0 1->-1 1->1 2->-1 2->2 3->-1 3->3
+"java.lang.String.toLowerCase:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.lang.String.trim:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.lang.String.valueOf:java.lang.String(boolean)" 0->-1 0->0 1->-1 1->1
+"java.lang.String.valueOf:java.lang.String(double)" 0->-1 0->0 1->-1 1->1
+"java.lang.String.valueOf:java.lang.String(int)" 0->-1 0->0 1->-1 1->1
+"java.lang.String.valueOf:java.lang.String(long)" 0->-1 0->0 1->-1 1->1
+"java.lang.StringBuilder.toString:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.lang.Throwable.getMessage:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.lang.Throwable.toString:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.nio.charset.CoderResult.toString:java.lang.String()" 0->-1 0->0 1->-1 1->1
+"java.text.NumberFormat.format:java.lang.String(double)" 0->-1 0->0 1->-1 1->1 2->-1 2->2
+"java.text.NumberFormat.format:java.lang.String(long)" 0->-1 0->0 1->-1 1->1 2->-1 2->2
+"java.text.SimpleDateFormat.format:java.lang.String(java.util.Date)" 0->-1 0->0 1->-1 1->1 2->-1 2->2
+"javax.net.ssl.TrustManagerFactory.getDefaultAlgorithm:java.lang.String()" 0->-1 0->0
+------------------------------------------

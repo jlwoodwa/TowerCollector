@@ -4,6 +4,8 @@
 
 package info.zamojski.soft.towercollector.uploader;
 
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.uploadWorker_Diag;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -48,6 +50,8 @@ import info.zamojski.soft.towercollector.utils.ApkUtils;
 import info.zamojski.soft.towercollector.utils.NetworkUtils;
 import info.zamojski.soft.towercollector.utils.OpenCellIdUtils;
 import info.zamojski.soft.towercollector.utils.PermissionUtils;
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
 import timber.log.Timber;
 
 public class UploaderWorker extends Worker implements IProgressListener {
@@ -143,6 +147,9 @@ public class UploaderWorker extends Worker implements IProgressListener {
                 return Result.failure(getMessageData(summary));
             }
 
+            @DataAccess(
+                    id = uploadWorker_Diag,
+                    dataType = {DataType.AppInfoAndPerformance_Diagnostics})
             AnalyticsStatistics startStats = MeasurementsDatabase.getInstance(MyApplication.getApplication()).getAnalyticsStatistics();
             long startTime = System.currentTimeMillis();
 

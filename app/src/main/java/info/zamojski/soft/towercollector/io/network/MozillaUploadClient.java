@@ -4,6 +4,10 @@
 
 package info.zamojski.soft.towercollector.io.network;
 
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorService_LocationListener_PreciseLoc;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorService_NetMonsterListener_ApproxLoc;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorService_registerApi_ApproxLoc;
+
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -11,6 +15,21 @@ import java.util.concurrent.TimeUnit;
 
 import info.zamojski.soft.towercollector.BuildConfig;
 import info.zamojski.soft.towercollector.io.network.compatibility.ExtendedOkHttpClientBuilder;
+import me.tianshili.annotationlib.DataTransmission;
+import me.tianshili.annotationlib.collectionAttribute.CollectedFor;
+import me.tianshili.annotationlib.collectionAttribute.EncryptionInTransit;
+import me.tianshili.annotationlib.collectionAttribute.NotStoredInBackend;
+import me.tianshili.annotationlib.collectionAttribute.OptionalCollection;
+import me.tianshili.annotationlib.collectionAttribute.TransmittedOffDevice;
+import me.tianshili.annotationlib.collectionAttribute.UserRequestDelete;
+import me.tianshili.annotationlib.collectionAttribute.UserToUserEncryption;
+import me.tianshili.annotationlib.sharingAttribute.OnlyAfterGettingUserConsent;
+import me.tianshili.annotationlib.sharingAttribute.OnlyInitiatedByUser;
+import me.tianshili.annotationlib.sharingAttribute.OnlySharedForLegalPurposes;
+import me.tianshili.annotationlib.sharingAttribute.OnlySharedWithServiceProviders;
+import me.tianshili.annotationlib.sharingAttribute.OnlyTransferringAnonymousData;
+import me.tianshili.annotationlib.sharingAttribute.SharedFor;
+import me.tianshili.annotationlib.sharingAttribute.SharedWithThirdParty;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -46,6 +65,10 @@ public class MozillaUploadClient extends ClientBase implements IUploadClient {
                     .post(requestBody)
                     .build();
 
+            @DataTransmission(
+                    accessId = {CollectorService_registerApi_ApproxLoc, CollectorService_NetMonsterListener_ApproxLoc, CollectorService_LocationListener_PreciseLoc},
+                    collectionAttribute = {TransmittedOffDevice.True, CollectedFor.AppFunctionality, CollectedFor.Analytics, OptionalCollection.False, NotStoredInBackend.False, EncryptionInTransit.False, UserRequestDelete.False, UserToUserEncryption.False},
+                    sharingAttribute = {SharedWithThirdParty.True, SharedFor.AppFunctionality, SharedFor.Analytics, OnlySharedWithServiceProviders.False, OnlySharedForLegalPurposes.False, OnlyInitiatedByUser.False, OnlyAfterGettingUserConsent.False, OnlyTransferringAnonymousData.False})
             Response response = client.newCall(request).execute();
             return handleResponse(response.code(), response.body().string());
         } catch (SocketTimeoutException | ConnectException ex) {

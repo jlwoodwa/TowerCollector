@@ -3,13 +3,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 package info.zamojski.soft.towercollector.utils;
-
 import android.content.Context;
 import android.content.pm.ShortcutManager;
 import android.os.Build;
-
 import androidx.annotation.StringRes;
-
 import info.zamojski.soft.towercollector.BuildConfig;
 import info.zamojski.soft.towercollector.R;
 
@@ -42,6 +39,7 @@ public class ApkUtils {
         return context.getString(R.string.preferences_email_content, appVersion, androidVersionName, androidVersionCode, deviceName);
     }
 
+    // This is just a device model, not a unique ID
     public static String getDeviceName() {
         return Build.MANUFACTURER + " " + Build.MODEL;
     }

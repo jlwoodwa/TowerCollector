@@ -3,7 +3,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 package info.zamojski.soft.towercollector.utils;
-
 import android.content.Context;
 import android.os.Build;
 import android.telephony.CellInfo;
@@ -16,7 +15,12 @@ import cz.mroczis.netmonster.core.INetMonster;
 import cz.mroczis.netmonster.core.factory.NetMonsterFactory;
 import cz.mroczis.netmonster.core.model.NetMonsterConfig;
 import cz.mroczis.netmonster.core.model.cell.ICell;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.*;
+
+import info.zamojski.soft.towercollector.R;
 import info.zamojski.soft.towercollector.collector.validators.CellIdentityValidator;
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
 import timber.log.Timber;
 
 public class MobileUtils {
@@ -41,8 +45,12 @@ public class MobileUtils {
 
     private static boolean isApi17CellInfoAvailable(Context context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        @DataAccess(
+                id = MobileUtils_Api17Probe_ApproxLoc,
+                dataType = {DataType.Location_ApproximateLocation})
         List<CellInfo> cells;
         try {
+
             cells = telephonyManager.getAllCellInfo();
         } catch (SecurityException ex) {
             Timber.d(ex, "isApi17CellInfoAvailable(): Result = location permission is denied");
@@ -74,6 +82,9 @@ public class MobileUtils {
     public static boolean isNetMonsterCoreApiCompatible(Context context) {
         INetMonster netMonster = getNetMonsterCore(context);
         try {
+            @DataAccess(
+                    id = MobileUtils_NetMonsterProbe_ApproxLoc,
+                    dataType = {DataType.Location_ApproximateLocation})
             List<ICell> cells = netMonster.getCells();
             return !cells.isEmpty();
         } catch (SecurityException ex) {

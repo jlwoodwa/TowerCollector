@@ -138,6 +138,7 @@ dependencies {
     implementation "org.checkerframework:checker-qual-android:${checkerFrameworkVersion}"
     // or if you use no annotations in source code the above line could be
     // compileOnly "org.checkerframework:checker-qual-android:${checkerFrameworkVersion}"
+    implementation 'io.github.i7mist:privacyannotationlib-android-sdk:1.1.2'
     annotationProcessor "org.checkerframework:checker:${checkerFrameworkVersion}"
 }
 
@@ -235,6 +236,35 @@ apply plugin: 'com.google.gms.google-services'
 afterEvaluate {
     tasks.matching { it.name.contains("GoogleServices") && !it.name.contains("Official") }*.enabled = false
     println "Google Services plugin enabled for: " + tasks.matching { it.name.contains("GoogleServices") && it.enabled }*.name
+}
+
+tasks.register("writeDebugJavacClasspath") {
+    group = "pnl"
+    description = "Writes the debug javac classpath for PNL whole-program inference (developOfficial variant)."
+    notCompatibleWithConfigurationCache("Reads JavaCompile task classpath at execution time")
+    // Depend on the full compile task so that BuildConfig, AnalyticsServiceFactory, and other
+    // app-internal types are compiled and available as .class files on the WPI classpath.
+    dependsOn("compileDevelopOfficialDebugJavaWithJavac")
+    def compileProvider = tasks.named("compileDevelopOfficialDebugJavaWithJavac")
+    doLast {
+        def ct = compileProvider.get()
+        def entries = []
+        if (ct.options.bootstrapClasspath != null) {
+            ct.options.bootstrapClasspath.files.each { entries << it.absolutePath }
+        }
+        ct.classpath.files.each { entries << it.absolutePath }
+        // Add the app's own compiled classes so WPI javac can resolve BuildConfig,
+        // AnalyticsServiceFactory, and other app-internal types without needing their sources.
+        def compiledClassesDir = new File(layout.buildDirectory.get().asFile,
+                "intermediates/javac/developOfficialDebug/compileDevelopOfficialDebugJavaWithJavac/classes")
+        if (compiledClassesDir.exists()) {
+            entries << compiledClassesDir.absolutePath
+        }
+        def outputFile = new File(layout.buildDirectory.get().asFile, "pnl/debug-javac-classpath.txt")
+        outputFile.parentFile.mkdirs()
+        outputFile.text = entries.unique().join(File.pathSeparator)
+        println "Wrote PNL javac classpath to: ${outputFile.absolutePath}"
+    }
 }
 
 tasks.withType(JavaCompile).configureEach { t ->

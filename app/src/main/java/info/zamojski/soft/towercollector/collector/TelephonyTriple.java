@@ -6,8 +6,15 @@ package info.zamojski.soft.towercollector.collector;
 
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.*;
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
 
 public class TelephonyTriple {
+
+    @DataAccess(
+            id = CollectorService_registerApi_ApproxLoc,
+            dataType = {DataType.Location_ApproximateLocation})
     private final TelephonyManager telephonyManager;
     private PhoneStateListener phoneStateListener;
     private Object cellInfoUpdateRequestCallback; // object to reuse the type on lower api TelephonyManager.CellInfoCallback on which it's always null

@@ -138,6 +138,7 @@ public class KmlExportFormatter implements IKmlFormatter {
         sb.append("        <styleUrl>#defaultStyle</styleUrl>\r\n");
         sb.append("        <Point>\r\n");
         boolean altitudeAvailable = !DoubleUtils.equals(m.getGpsAltitude(), Measurement.GPS_VALUE_NOT_AVAILABLE);
+        // TODO: Data Access — Precise location
         sb.append(String.format(LOCALE, "          <coordinates>%s,%s%s</coordinates>\r\n",
                 formatCoordinate(m.getLongitude()),
                 formatCoordinate(m.getLatitude()),

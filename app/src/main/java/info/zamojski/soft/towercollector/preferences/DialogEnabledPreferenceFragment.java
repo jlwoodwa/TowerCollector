@@ -4,9 +4,13 @@
 
 package info.zamojski.soft.towercollector.preferences;
 
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.HelpDialogBox_AppInteract;
+
 import info.zamojski.soft.towercollector.MyApplication;
 import info.zamojski.soft.towercollector.R;
 import info.zamojski.soft.towercollector.controls.DialogManager;
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
 
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -24,6 +28,9 @@ public abstract class DialogEnabledPreferenceFragment extends PreferenceFragment
     }
 
     protected void setupDialog(final int preferenceKey, final int title, final int content, final boolean textIsSelectable) {
+        @DataAccess(
+                id = HelpDialogBox_AppInteract,
+                dataType = {DataType.AppActivity_AppInteractions})
         PreferenceScreen preference = findPreference(getString(preferenceKey));
         preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override

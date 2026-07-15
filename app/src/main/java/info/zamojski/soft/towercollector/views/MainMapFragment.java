@@ -4,6 +4,9 @@
 
 package info.zamojski.soft.towercollector.views;
 
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.MainMapFragment_LastKnownLoc_PreciseLoc;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.MainMapFragment_PreciseLoc;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -79,6 +82,8 @@ import info.zamojski.soft.towercollector.utils.GpsUtils;
 import info.zamojski.soft.towercollector.utils.MapUtils;
 import info.zamojski.soft.towercollector.utils.NetworkTypeUtils;
 import info.zamojski.soft.towercollector.utils.ResourceUtils;
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
 import timber.log.Timber;
 
 public class MainMapFragment extends MainFragmentBase implements FollowMyLocationOverlay.FollowMyLocationChangeListener {
@@ -236,6 +241,9 @@ public class MainMapFragment extends MainFragmentBase implements FollowMyLocatio
         myLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                @DataAccess(
+                        id = MainMapFragment_PreciseLoc,
+                        dataType = {DataType.Location_PreciseLocation})
                 Location lastLocation = myLocationOverlay.getLastFix();
                 Timber.i("onMyLocationClick(): Moving to %s", lastLocation);
                 if (lastLocation != null) {
@@ -391,6 +399,9 @@ public class MainMapFragment extends MainFragmentBase implements FollowMyLocatio
             Timber.d("moveToLastMeasurement(): No measurements, moving to last known location");
             if (GpsUtils.hasGpsPermissions(MyApplication.getApplication())) {
                 LocationManager locationManager = (LocationManager) MyApplication.getApplication().getSystemService(Context.LOCATION_SERVICE);
+                @DataAccess(
+                        id = MainMapFragment_LastKnownLoc_PreciseLoc,
+                        dataType = {DataType.Location_PreciseLocation})
                 @SuppressLint("MissingPermission") Location lastKnownLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), false));
                 if (lastKnownLocation != null) {
                     moveToLocation(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());

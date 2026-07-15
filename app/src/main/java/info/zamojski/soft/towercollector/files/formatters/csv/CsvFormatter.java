@@ -3,9 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 package info.zamojski.soft.towercollector.files.formatters.csv;
-
 import info.zamojski.soft.towercollector.utils.ApkUtils;
-
 import java.text.NumberFormat;
 import java.util.Locale;
 

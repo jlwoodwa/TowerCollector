@@ -4,6 +4,8 @@
 
 package info.zamojski.soft.towercollector;
 
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.MyApplication_AppInteract;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -48,6 +50,8 @@ import android.widget.Toast;
 
 import info.zamojski.soft.towercollector.utils.PermissionUtils;
 import info.zamojski.soft.towercollector.utils.StorageUtils;
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
 import timber.log.Timber;
 
 public class MyApplication extends Application {
@@ -295,6 +299,9 @@ public class MyApplication extends Application {
         return popupTheme;
     }
 
+    @DataAccess(
+            id = MyApplication_AppInteract ,
+            dataType = {DataType.AppActivity_AppInteractions})
     public static PreferencesProvider getPreferencesProvider() {
         return prefProvider;
     }

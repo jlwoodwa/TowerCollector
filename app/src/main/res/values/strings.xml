@@ -593,4 +593,5 @@
     <string name="permission_map_denied_message">The map cannot be enabled due to denied location permission</string>
     <string name="permission_map_never_ask_again_message">The map is unavailable due to denied location permission</string>
     <string name="permission_uploader_denied_message">Upload cancelled due to denied internet permission.</string>
+    <string name="ApproxLoc" />
 </resources>

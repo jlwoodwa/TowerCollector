@@ -4,21 +4,32 @@
 
 package info.zamojski.soft.towercollector.model;
 
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.MeasurementBase_PreciseLoc_Latitude;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.MeasurementBase_PreciseLoc_Longitude;
+
 import android.content.Context;
 
 import java.util.List;
 
 import info.zamojski.soft.towercollector.utils.NetworkTypeUtils;
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
 
 public abstract class MeasurementBase {
 
     /**
      * Geographic Latitude.
      */
+    @DataAccess(
+            id = MeasurementBase_PreciseLoc_Latitude,
+            dataType = {DataType.Location_PreciseLocation})
     protected double latitude;
     /**
      * Geographic Longitude.
      */
+    @DataAccess(
+            id = MeasurementBase_PreciseLoc_Longitude,
+            dataType = {DataType.Location_PreciseLocation})
     protected double longitude;
     /**
      * Measured at Unix Timestamp with milliseconds.

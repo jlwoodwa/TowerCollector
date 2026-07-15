@@ -4,6 +4,7 @@
 
 package info.zamojski.soft.towercollector;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
@@ -11,6 +12,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.content.pm.ServiceInfo;
 import android.location.Location;
 import android.location.LocationListener;
@@ -35,6 +37,7 @@ import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import org.greenrobot.eventbus.EventBus;
@@ -82,7 +85,10 @@ import info.zamojski.soft.towercollector.utils.GpsUtils;
 import info.zamojski.soft.towercollector.utils.MobileUtils;
 import info.zamojski.soft.towercollector.utils.NetworkTypeUtils;
 import info.zamojski.soft.towercollector.utils.PermissionUtils;
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
 import timber.log.Timber;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.*;
 
 public class CollectorService extends Service {
 
@@ -99,8 +105,12 @@ public class CollectorService extends Service {
     private static final Object reacquireWakeLockLock = new Object();
 
     private IBinder binder = new LocalBinder();
+    @DataAccess(
+            id = CollectorService_telephonyTriple,
+            dataType = {DataType.Location_ApproximateLocation})
     private List<TelephonyTriple> telephonyTriples = new ArrayList<>(2);
     private Tuple<Method, Boolean> getNeighboringCellInfoMethod;
+
     private LocationManager locationManager;
 
     private NotificationManager notificationManager;
@@ -144,6 +154,9 @@ public class CollectorService extends Service {
     private PowerManager.WakeLock wakeLock;
 
     private IntentSource startIntentSource = IntentSource.System;
+    @DataAccess(
+            id = CollectorService_Diag,
+            dataType = {DataType.AppInfoAndPerformance_Diagnostics})
     private int apiVersionUsed;
 
     // ========== SERVICE ========== //
@@ -566,6 +579,9 @@ public class CollectorService extends Service {
             @Override
             public void run() {
                 try {
+                    @DataAccess(
+                            id = CollectorService_NetMonsterListener_ApproxLoc,
+                            dataType = {DataType.Location_ApproximateLocation})
                     List<ICell> cells = netMonster.getCells();
                     if (cells == null) {
                         Timber.tag(INNER_TAG).d("run(): Null reported");
@@ -593,6 +609,14 @@ public class CollectorService extends Service {
     private void processCellLocation(TelephonyManager telephonyManager, CellLocation
             cellLocation, List<NeighboringCellInfo> neighboringCells) {
         // get network type
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         int networkTypeInt = telephonyManager.getNetworkType();
         NetworkGroup networkType = NetworkTypeUtils.getNetworkGroup(networkTypeInt);
         // get network operator (may be unreliable for CDMA)
@@ -603,6 +627,11 @@ public class CollectorService extends Service {
         measurementUpdater.setLastCellLocation(cellLocation, networkType, networkOperatorCode, networkOperatorName, neighboringCells);
     }
 
+//    private final int CollectorService_LocationListener_PreciseLoc = 3;
+
+    @DataAccess(
+            id = CollectorService_LocationListener_PreciseLoc,
+            dataType = {DataType.Location_PreciseLocation})
     private LocationListener locationListener = new LocationListener() {
         private final String INNER_TAG = CollectorService.class.getSimpleName() + "." + LocationListener.class.getSimpleName();
 

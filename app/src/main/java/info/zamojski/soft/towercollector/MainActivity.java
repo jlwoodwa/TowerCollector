@@ -4,6 +4,9 @@
 
 package info.zamojski.soft.towercollector;
 
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.ExportAction_AppInteract;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.MainActivity_onClick_AppInteract;
+
 import android.Manifest;
 import androidx.annotation.RequiresApi;
 import android.app.AlertDialog;
@@ -115,6 +118,8 @@ import info.zamojski.soft.towercollector.utils.StorageUtils;
 import info.zamojski.soft.towercollector.utils.StringUtils;
 import info.zamojski.soft.towercollector.utils.UpdateDialogArrayAdapter;
 import info.zamojski.soft.towercollector.views.MainActivityPagerAdapter;
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -610,6 +615,10 @@ public class MainActivity extends AppCompatActivity
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // because it is collecting what item the user clicked on
+                @DataAccess(
+                        id = MainActivity_onClick_AppInteract,
+                        dataType = {DataType.AppActivity_AppInteractions})
                 DownloadLink downloadLink = (DownloadLink) parent.getItemAtPosition(position);
                 Timber.d("displayNewVersionDownloadOptions(): Selected position: %s", downloadLink.getLabel());
                 boolean disableAutoUpdateCheckCheckboxChecked = disableAutoUpdateCheckCheckbox.isChecked();
@@ -728,6 +737,10 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    // preference collected: which button the user selects
+    @me.tianshili.annotationlib.DataAccess(
+            id = ExportAction_AppInteract,
+            dataType = {me.tianshili.annotationlib.DataType.AppActivity_AppInteractions})
     public void displayExportFinishedDialog() {
         LayoutInflater inflater = LayoutInflater.from(this);
         View dialogLayout = inflater.inflate(R.layout.export_finished_dialog, null);

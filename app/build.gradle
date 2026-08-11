@@ -140,6 +140,14 @@ dependencies {
     // compileOnly "org.checkerframework:checker-qual-android:${checkerFrameworkVersion}"
     implementation 'io.github.i7mist:privacyannotationlib-android-sdk:1.1.2'
     annotationProcessor "org.checkerframework:checker:${checkerFrameworkVersion}"
+
+    // PNL checker qualifiers (@Label/@Top/@PolyLabel/Source/Sink/Tag). checker-qual-android above
+    // supplies the Checker Framework's own annotations but not this checker's, so app source that
+    // writes a PNL annotation -- e.g. @DefaultQualifierForUse(Top.class) on the Activity classes
+    // PermissionsDispatcher wraps -- does not compile without this. compileOnly: they are
+    // source-retention type annotations, nothing is needed at runtime.
+    // Built by SourceCode/FDAVerif.sh's compile step.
+    compileOnly files("${rootDir}/../../SourceCode/PNLAnnotations.jar")
 }
 
 Properties getCustomProperties(String currentFlavor) {

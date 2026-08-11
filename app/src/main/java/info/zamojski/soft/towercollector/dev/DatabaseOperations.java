@@ -4,6 +4,11 @@
 
 package info.zamojski.soft.towercollector.dev;
 
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
+
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.DatabaseOperations_DbString_Diag;
+
 import android.content.Context;
 import android.net.Uri;
 import android.util.Base64;
@@ -127,6 +132,9 @@ public class DatabaseOperations {
         }
     }
 
+    @DataAccess(
+            id = DatabaseOperations_DbString_Diag,
+            dataType = {DataType.AppInfoAndPerformance_Diagnostics})
     public static String getDatabaseBaseString(Context context) {
         // invalidate handle
         MeasurementsDatabase.invalidateInstance();

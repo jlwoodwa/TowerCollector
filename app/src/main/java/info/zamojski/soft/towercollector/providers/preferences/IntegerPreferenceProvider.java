@@ -4,6 +4,11 @@
 
 package info.zamojski.soft.towercollector.providers.preferences;
 
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
+
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.MyApplication_AppInteract;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -24,6 +29,9 @@ public class IntegerPreferenceProvider extends PreferenceProviderBase<Integer> {
     }
 
     @Override
+    @DataAccess(
+            id = MyApplication_AppInteract,
+            dataType = {DataType.AppActivity_AppInteractions})
     Integer getPreferenceValue(SharedPreferences prefs, @StringRes int valueKey, Integer defaultValue) {
         String key = context.getString(valueKey);
         return prefs.getInt(key, defaultValue);

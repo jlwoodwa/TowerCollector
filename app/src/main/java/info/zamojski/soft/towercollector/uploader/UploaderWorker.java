@@ -147,9 +147,6 @@ public class UploaderWorker extends Worker implements IProgressListener {
                 return Result.failure(getMessageData(summary));
             }
 
-            @DataAccess(
-                    id = uploadWorker_Diag,
-                    dataType = {DataType.AppInfoAndPerformance_Diagnostics})
             AnalyticsStatistics startStats = MeasurementsDatabase.getInstance(MyApplication.getApplication()).getAnalyticsStatistics();
             long startTime = System.currentTimeMillis();
 

@@ -4,6 +4,11 @@
 
 package info.zamojski.soft.towercollector.providers.preferences;
 
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
+
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.MyApplication_AppInteract;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -25,6 +30,9 @@ public class FloatPreferenceProvider extends PreferenceProviderBase<Float> {
     }
 
     @Override
+    @DataAccess(
+            id = MyApplication_AppInteract,
+            dataType = {DataType.AppActivity_AppInteractions})
     Float getPreferenceValue(SharedPreferences prefs, @StringRes int valueKey, Float defaultValue) {
         String key = context.getString(valueKey);
         return prefs.getFloat(key, defaultValue);

@@ -32,6 +32,12 @@ public class PrivacyAccessIds {
 
     public static final int MeasurementBase_PreciseLoc_Longitude = 20;
 
+    public static final int PermissionUtils_AppPermissions_InstalledApps = 21;
+
+    public static final int DatabaseOperations_DbString_Diag = 22;
+
+    public static final int StartupIntent_AppInteract = 23;
+
     public static final int MobileUtils_Api17Probe_ApproxLoc = 0;
 
     public static final int MobileUtils_NetMonsterProbe_ApproxLoc = 1;

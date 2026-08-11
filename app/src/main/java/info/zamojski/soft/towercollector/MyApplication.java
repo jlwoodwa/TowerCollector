@@ -4,7 +4,9 @@
 
 package info.zamojski.soft.towercollector;
 
-import static info.zamojski.soft.towercollector.PrivacyAccessIds.MyApplication_AppInteract;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.DatabaseOperations_DbString_Diag;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.PermissionUtils_AppPermissions_InstalledApps;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.StartupIntent_AppInteract;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -50,8 +52,21 @@ import android.widget.Toast;
 
 import info.zamojski.soft.towercollector.utils.PermissionUtils;
 import info.zamojski.soft.towercollector.utils.StorageUtils;
-import me.tianshili.annotationlib.DataAccess;
-import me.tianshili.annotationlib.DataType;
+import me.tianshili.annotationlib.DataTransmission;
+import me.tianshili.annotationlib.collectionAttribute.CollectedFor;
+import me.tianshili.annotationlib.collectionAttribute.EncryptionInTransit;
+import me.tianshili.annotationlib.collectionAttribute.NotStoredInBackend;
+import me.tianshili.annotationlib.collectionAttribute.OptionalCollection;
+import me.tianshili.annotationlib.collectionAttribute.TransmittedOffDevice;
+import me.tianshili.annotationlib.collectionAttribute.UserRequestDelete;
+import me.tianshili.annotationlib.collectionAttribute.UserToUserEncryption;
+import me.tianshili.annotationlib.sharingAttribute.OnlyAfterGettingUserConsent;
+import me.tianshili.annotationlib.sharingAttribute.OnlyInitiatedByUser;
+import me.tianshili.annotationlib.sharingAttribute.OnlySharedForLegalPurposes;
+import me.tianshili.annotationlib.sharingAttribute.OnlySharedWithServiceProviders;
+import me.tianshili.annotationlib.sharingAttribute.OnlyTransferringAnonymousData;
+import me.tianshili.annotationlib.sharingAttribute.SharedFor;
+import me.tianshili.annotationlib.sharingAttribute.SharedWithThirdParty;
 import timber.log.Timber;
 
 public class MyApplication extends Application {
@@ -299,9 +314,6 @@ public class MyApplication extends Application {
         return popupTheme;
     }
 
-    @DataAccess(
-            id = MyApplication_AppInteract ,
-            dataType = {DataType.AppActivity_AppInteractions})
     public static PreferencesProvider getPreferencesProvider() {
         return prefProvider;
     }
@@ -322,6 +334,10 @@ public class MyApplication extends Application {
         return (backgroundTaskName != null && backgroundTaskName.equals(clazz.getName()));
     }
 
+    @DataTransmission(
+            accessId = {PermissionUtils_AppPermissions_InstalledApps, DatabaseOperations_DbString_Diag, StartupIntent_AppInteract},
+            collectionAttribute = {TransmittedOffDevice.True, CollectedFor.AppFunctionality, CollectedFor.FraudPreventionAndSecurityAndCompliance, OptionalCollection.False, NotStoredInBackend.False, EncryptionInTransit.False, UserRequestDelete.False, UserToUserEncryption.False},
+            sharingAttribute = {SharedWithThirdParty.True, SharedFor.Analytics, OnlySharedWithServiceProviders.True, OnlySharedForLegalPurposes.False, OnlyInitiatedByUser.False, OnlyAfterGettingUserConsent.False, OnlyTransferringAnonymousData.False})
     public synchronized static void handleSilentException(Throwable throwable) {
         String throwableHash = HashUtils.toSha1(throwable.toString());
         if (!handledSilentExceptionHashes.contains(throwableHash)) {

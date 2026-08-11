@@ -4,6 +4,11 @@
 
 package info.zamojski.soft.towercollector.utils;
 
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
+
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.PermissionUtils_AppPermissions_InstalledApps;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -49,6 +54,9 @@ public class PermissionUtils {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE;
     }
 
+    @DataAccess(
+            id = PermissionUtils_AppPermissions_InstalledApps,
+            dataType = {DataType.AppActivity_InstalledApps})
     public static String getAppPermissions() {
         Map<String, Boolean> permissions = getAppPermissionsInternal();
         StringBuilder sb = new StringBuilder();

@@ -4,6 +4,11 @@
 
 package info.zamojski.soft.towercollector.broadcast;
 
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
+
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.StartupIntent_AppInteract;
+
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -81,6 +86,9 @@ public class ExternalBroadcastReceiver extends BroadcastReceiver {
         startCollectorServiceInternal(context, source, true);
     }
 
+    @DataAccess(
+            id = StartupIntent_AppInteract,
+            dataType = {DataType.AppActivity_AppInteractions})
     private void startCollectorServiceInternal(Context context, IntentSource source, boolean isBackground) {
         if (!canStartBackgroundService(context)) {
             return;

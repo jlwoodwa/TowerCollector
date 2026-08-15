@@ -4,6 +4,11 @@
 
 package info.zamojski.soft.towercollector;
 
+import me.tianshili.annotationlib.DataAccess;
+import me.tianshili.annotationlib.DataType;
+
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.StartupIntent_AppInteract;
+
 import info.zamojski.soft.towercollector.analytics.IntentSource;
 import info.zamojski.soft.towercollector.broadcast.ExternalBroadcastReceiver;
 import info.zamojski.soft.towercollector.dao.MeasurementsDatabase;
@@ -58,6 +63,9 @@ public class SplashActivity extends Activity {
     }
 
     @Override
+    @DataAccess(
+            id = StartupIntent_AppInteract,
+            dataType = {DataType.AppActivity_AppInteractions})
     protected void onStart() {
         super.onStart();
         Timber.d("onStart(): Starting splash screen");

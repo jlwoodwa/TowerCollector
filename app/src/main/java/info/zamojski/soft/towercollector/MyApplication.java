@@ -4,7 +4,12 @@
 
 package info.zamojski.soft.towercollector;
 
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.AnalyticalStats_Loc;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorService_Diag;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.DatabaseOperations_DbString_Diag;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.HelpDialogBox_AppInteract;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.MainActivity_onClick_AppInteract;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.MeasurementStats_loc;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.PermissionUtils_AppPermissions_InstalledApps;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.StartupIntent_AppInteract;
 
@@ -298,6 +303,10 @@ public class MyApplication extends Application {
         return customizedFields.toArray(new ReportField[0]);
     }
 
+    @DataTransmission(
+            accessId = {MainActivity_onClick_AppInteract, HelpDialogBox_AppInteract, CollectorService_Diag, AnalyticalStats_Loc, MeasurementStats_loc},
+            collectionAttribute = {TransmittedOffDevice.True, CollectedFor.Analytics, OptionalCollection.True, NotStoredInBackend.False, EncryptionInTransit.False, UserRequestDelete.False, UserToUserEncryption.False},
+            sharingAttribute = {SharedWithThirdParty.True, SharedFor.Analytics, OnlySharedWithServiceProviders.True, OnlySharedForLegalPurposes.False, OnlyInitiatedByUser.False, OnlyAfterGettingUserConsent.False, OnlyTransferringAnonymousData.False})
     public static IAnalyticsReportingService getAnalytics() {
         return analyticsService;
     }

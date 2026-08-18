@@ -12,6 +12,7 @@ import androidx.annotation.IntegerRes;
 import androidx.annotation.StringRes;
 
 import info.zamojski.soft.towercollector.MyApplication;
+import org.checkerframework.checker.PNL.PolyBegin;
 import timber.log.Timber;
 
 abstract class PreferenceProviderBase<T> {
@@ -22,10 +23,12 @@ abstract class PreferenceProviderBase<T> {
         this.context = context;
     }
 
+    @PolyBegin
     public T getPreference(@StringRes int valueKey, int defaultValueKey) {
         return getPreference(valueKey, defaultValueKey, true);
     }
 
+    @PolyBegin
     T getPreference(@StringRes int valueKey, int defaultValueKey, boolean loggerEnabled) {
         T value;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -46,6 +49,7 @@ abstract class PreferenceProviderBase<T> {
         return value;
     }
 
+    @PolyBegin
     public void setPreference(@StringRes int valueKey, T value) {
         Timber.d("setPreference(): Preference `%s` value set to `%s`", context.getString(valueKey), value);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -54,9 +58,12 @@ abstract class PreferenceProviderBase<T> {
         editor.apply();
     }
 
+    @PolyBegin
     abstract T getPreferenceDefaultValue(@IntegerRes int defaultValueKey);
 
+    @PolyBegin
     abstract T getPreferenceValue(SharedPreferences prefs, @StringRes int valueKey, T defaultValue);
 
+    @PolyBegin
     abstract void setPreferenceValue(SharedPreferences.Editor editor, @StringRes int valueKey, T value);
 }

@@ -10,8 +10,12 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import androidx.annotation.IntegerRes;
 import androidx.annotation.StringRes;
+import org.checkerframework.checker.PNL.qual.Label;
+import org.checkerframework.checker.PNL.qual.Sink;
+import org.checkerframework.checker.PNL.qual.Source;
 
-public class IntegerPreferenceProvider extends PreferenceProviderBase<Integer> {
+
+public class IntegerPreferenceProvider extends PreferenceProviderBase<@Label(sources = {Source.Approximate_location}, sinks = {Sink.Ephemerally_processed, Sink.Collected_App_functionality, Sink.Collected_Analytics, Sink.Shared_App_functionality, Sink.Shared_Analytics}) Integer> {
 
     public IntegerPreferenceProvider(Context context) {
         super(context);

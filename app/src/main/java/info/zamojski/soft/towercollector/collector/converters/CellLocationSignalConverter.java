@@ -110,28 +110,28 @@ public class CellLocationSignalConverter {
     private Method getLteDbmMethod() throws NoSuchMethodException {
         if (lteDbmMethod == null) {
             //getwcdmarscp
-            lteDbmMethod = SignalStrength.class.getMethod("getLteDbm", new Class[0]);
+            lteDbmMethod = SignalStrength.class.getMethod("getLteDbm", new Class<?>[0]);
         }
         return lteDbmMethod;
     }
 
     private Method getLteSignalStrengthMethod() throws NoSuchMethodException {
         if (lteSignalStrengthMethod == null) {
-            lteSignalStrengthMethod = SignalStrength.class.getMethod("getLteSignalStrength", new Class[0]);
+            lteSignalStrengthMethod = SignalStrength.class.getMethod("getLteSignalStrength", new Class<?>[0]);
         }
         return lteSignalStrengthMethod;
     }
 
     public Method getWcdmaRscpMethod() throws NoSuchMethodException {
         if (wcdmaRscpMethod == null) {
-            wcdmaRscpMethod = SignalStrength.class.getMethod("getWcdmaRscp", new Class[0]);
+            wcdmaRscpMethod = SignalStrength.class.getMethod("getWcdmaRscp", new Class<?>[0]);
         }
         return wcdmaRscpMethod;
     }
 
     public Method getWcdmaEcioMethod() throws NoSuchMethodException {
         if (wcdmaEcioMethod == null) {
-            wcdmaEcioMethod = SignalStrength.class.getMethod("getWcdmaEcio", new Class[0]);
+            wcdmaEcioMethod = SignalStrength.class.getMethod("getWcdmaEcio", new Class<?>[0]);
         }
         return wcdmaEcioMethod;
     }

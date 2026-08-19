@@ -4,12 +4,10 @@
 
 package info.zamojski.soft.towercollector;
 
-import static info.zamojski.soft.towercollector.PrivacyAccessIds.AnalyticalStats_Loc;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorService_Diag;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.DatabaseOperations_DbString_Diag;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.HelpDialogBox_AppInteract;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.MainActivity_onClick_AppInteract;
-import static info.zamojski.soft.towercollector.PrivacyAccessIds.MeasurementStats_loc;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.PermissionUtils_AppPermissions_InstalledApps;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.StartupIntent_AppInteract;
 
@@ -73,6 +71,7 @@ import me.tianshili.annotationlib.sharingAttribute.OnlyTransferringAnonymousData
 import me.tianshili.annotationlib.sharingAttribute.SharedFor;
 import me.tianshili.annotationlib.sharingAttribute.SharedWithThirdParty;
 import timber.log.Timber;
+import org.checkerframework.checker.PNL.Begin;
 
 public class MyApplication extends Application {
 
@@ -304,7 +303,7 @@ public class MyApplication extends Application {
     }
 
     @DataTransmission(
-            accessId = {MainActivity_onClick_AppInteract, HelpDialogBox_AppInteract, CollectorService_Diag, AnalyticalStats_Loc, MeasurementStats_loc},
+            accessId = {MainActivity_onClick_AppInteract, HelpDialogBox_AppInteract, CollectorService_Diag},
             collectionAttribute = {TransmittedOffDevice.True, CollectedFor.Analytics, OptionalCollection.True, NotStoredInBackend.False, EncryptionInTransit.False, UserRequestDelete.False, UserToUserEncryption.False},
             sharingAttribute = {SharedWithThirdParty.True, SharedFor.Analytics, OnlySharedWithServiceProviders.True, OnlySharedForLegalPurposes.False, OnlyInitiatedByUser.False, OnlyAfterGettingUserConsent.False, OnlyTransferringAnonymousData.False})
     public static IAnalyticsReportingService getAnalytics() {
@@ -339,7 +338,7 @@ public class MyApplication extends Application {
         return backgroundTaskName;
     }
 
-    public synchronized static boolean isBackgroundTaskRunning(Class clazz) {
+    public synchronized static boolean isBackgroundTaskRunning(Class<?> clazz) {
         return (backgroundTaskName != null && backgroundTaskName.equals(clazz.getName()));
     }
 

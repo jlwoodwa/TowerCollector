@@ -7,6 +7,10 @@ package info.zamojski.soft.towercollector.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.checkerframework.checker.PNL.ParameterizedContainer;
+import org.checkerframework.checker.PNL.ParameterizedContainerAddition;
+
+@ParameterizedContainer
 public class Cache<TKey, TValue> {
 
     private final Map<TKey, TValue> cache = new HashMap<>();
@@ -15,6 +19,7 @@ public class Cache<TKey, TValue> {
         return cache.get(key);
     }
 
+    @ParameterizedContainerAddition(elementIndex = {0, 1}, typeArgumentIndex = {0, 1})
     public void set(TKey key, TValue value) {
         cache.put(key, value);
     }

@@ -15,6 +15,7 @@ import com.example.android.internal.util.XmlUtils;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -70,7 +71,7 @@ public class PreferencesOperations {
                 FileWriter fileWriter = new FileWriter() {
                     @Override
                     protected void writeFileInternal(OutputStream outputStream) throws Exception {
-                        XmlUtils.writeMapXml(prefs.getAll(), outputStream);
+                        XmlUtils.writeMapXml(new HashMap<String, Object>(prefs.getAll()), outputStream);
                     }
                 };
                 WriteResult result = fileWriter.writeFile(MyApplication.getApplication(), storageUri, fileName);
@@ -104,20 +105,20 @@ public class PreferencesOperations {
         try {
             Uri storageUri = MyApplication.getPreferencesProvider().getStorageUri();
             if (storageUri != null) {
-                FileReader<Map<String, ?>> fileReader = new FileReader<Map<String, ?>>() {
+                FileReader<Map<String, Object>> fileReader = new FileReader<Map<String, Object>>() {
                     @Override
-                    protected Map<String, ?> readFileInternal(InputStream inputStream) throws Exception {
+                    protected Map<String, Object> readFileInternal(InputStream inputStream) throws Exception {
                         @SuppressWarnings("unchecked")
-                        Map<String, ?> entries = XmlUtils.readMapXml(inputStream);
+                        Map<String, Object> entries = XmlUtils.readMapXml(inputStream);
                         return entries;
                     }
                 };
-                ReadResult<Map<String, ?>> result = fileReader.readFile(MyApplication.getApplication(), storageUri, fileName);
+                ReadResult<Map<String, Object>> result = fileReader.readFile(MyApplication.getApplication(), storageUri, fileName);
                 switch (result.getResultType()) {
                     case Success:
                         Editor prefEdit = prefs.edit();
                         prefEdit.clear();
-                        for (Entry<String, ?> entry : result.getValue().entrySet()) {
+                        for (Entry<String, Object> entry : result.getValue().entrySet()) {
                             Object v = entry.getValue();
                             String key = entry.getKey();
 

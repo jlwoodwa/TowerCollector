@@ -4,9 +4,6 @@
 
 package info.zamojski.soft.towercollector.dao;
 
-import static info.zamojski.soft.towercollector.PrivacyAccessIds.AnalyticalStats_Loc;
-import static info.zamojski.soft.towercollector.PrivacyAccessIds.MeasurementStats_loc;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -34,8 +31,6 @@ import info.zamojski.soft.towercollector.model.Measurement;
 import info.zamojski.soft.towercollector.model.Statistics;
 import info.zamojski.soft.towercollector.utils.DateUtils;
 import info.zamojski.soft.towercollector.utils.HashUtils;
-import me.tianshili.annotationlib.DataAccess;
-import me.tianshili.annotationlib.DataType;
 import timber.log.Timber;
 
 public class MeasurementsDatabase {
@@ -261,9 +256,6 @@ public class MeasurementsDatabase {
         return count;
     }
 
-    @DataAccess(
-            id = MeasurementStats_loc,
-            dataType = {DataType.Location_PreciseLocation})
     public Statistics getMeasurementsStatistics() {
         // Try to get from cache then read from DB (copy to local to avoid null if invalidated in the meantime)
         Statistics lastStatisticsCacheCopy = this.lastStatisticsCache;
@@ -334,9 +326,6 @@ public class MeasurementsDatabase {
         return stats;
     }
 
-    @DataAccess(
-            id = AnalyticalStats_Loc,
-            dataType = {DataType.Location_PreciseLocation})
     public AnalyticsStatistics getAnalyticsStatistics() {
         Timber.d("getAnalyticsStatistics(): Getting analytics stats");
         AnalyticsStatistics stats = new AnalyticsStatistics();

@@ -6,6 +6,8 @@ package info.zamojski.soft.towercollector.utils;
 
 import android.text.TextUtils;
 
+import org.checkerframework.checker.PNL.qual.PolyLabel;
+
 public class StringUtils {
 
     public static int toInteger(String value, int defaultValue) {
@@ -18,7 +20,7 @@ public class StringUtils {
         }
     }
 
-    public static boolean isNullEmptyOrWhitespace(String value) {
+    public static @PolyLabel boolean isNullEmptyOrWhitespace(@PolyLabel String value) {
         return value == null || value.isEmpty() || value.trim().isEmpty();
     }
 
@@ -26,7 +28,7 @@ public class StringUtils {
         return s.substring(start, Math.min(start + length, s.length()));
     }
 
-    public static boolean mayBeJson(String string) {
+    public static @PolyLabel boolean mayBeJson(@PolyLabel String string) {
         return !isNullEmptyOrWhitespace(string)
                 && ("null".equals(string)
                 || (string.startsWith("[") && string.endsWith("]")) || (string.startsWith("{") && string.endsWith("}")));

@@ -13,7 +13,6 @@ import static info.zamojski.soft.towercollector.PrivacyAccessIds.DatabaseOperati
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.HelpDialogBox_AppInteract;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.MainActivity_onClick_AppInteract;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.MyApplication_SilentException_CrashLogs;
-import static info.zamojski.soft.towercollector.PrivacyAccessIds.PermissionUtils_AppPermissions_InstalledApps;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.StartupIntent_AppInteract;
 
 import java.io.ByteArrayOutputStream;
@@ -361,7 +360,7 @@ public class MyApplication extends Application {
     }
 
     @DataTransmission(
-            accessId = {PermissionUtils_AppPermissions_InstalledApps, DatabaseOperations_DbString_Diag, StartupIntent_AppInteract, MyApplication_SilentException_CrashLogs},
+            accessId = {DatabaseOperations_DbString_Diag, StartupIntent_AppInteract, MyApplication_SilentException_CrashLogs},
             collectionAttribute = {TransmittedOffDevice.True, CollectedFor.AppFunctionality, CollectedFor.FraudPreventionAndSecurityAndCompliance, OptionalCollection.False, NotStoredInBackend.False, EncryptionInTransit.False, UserRequestDelete.False, UserToUserEncryption.False},
             sharingAttribute = {SharedWithThirdParty.True, SharedFor.Analytics, OnlySharedWithServiceProviders.True, OnlySharedForLegalPurposes.False, OnlyInitiatedByUser.False, OnlyAfterGettingUserConsent.False, OnlyTransferringAnonymousData.False})
     public synchronized static void handleSilentException(

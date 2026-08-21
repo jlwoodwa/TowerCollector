@@ -6,7 +6,10 @@ package info.zamojski.soft.towercollector.model;
 
 import android.content.Context;
 
+import org.checkerframework.checker.PNL.qual.Label;
 import org.checkerframework.checker.PNL.qual.PolyLabel;
+import org.checkerframework.checker.PNL.qual.Sink;
+import org.checkerframework.checker.PNL.qual.Source;
 
 import java.util.List;
 
@@ -51,7 +54,7 @@ public abstract class MeasurementBase {
         this.measuredAt = measuredAt;
     }
 
-    protected @PolyLabel String getDescription(Context context, List<? extends @PolyLabel CellBase> cells, String lineSeparator) {
+    protected @Label(sources = Source.Approximate_location, sinks = {Sink.Ephemerally_processed, Sink.User_to_user_encrypted, Sink.Encrypted_in_transit, Sink.Sh_initiated_by_user, Sink.Sh_only_with_consent, Sink.Only_transfer_anonymous_data, Sink.Sh_with_service_providers, Sink.Collected_App_functionality, Sink.Collected_Analytics, Sink.Shared_App_functionality, Sink.Shared_Analytics}) String getDescription(Context context, List<? extends @Label(sources = Source.Approximate_location, sinks = {Sink.Ephemerally_processed, Sink.User_to_user_encrypted, Sink.Encrypted_in_transit, Sink.Sh_initiated_by_user, Sink.Sh_only_with_consent, Sink.Only_transfer_anonymous_data, Sink.Sh_with_service_providers, Sink.Collected_App_functionality, Sink.Collected_Analytics, Sink.Shared_App_functionality, Sink.Shared_Analytics}) CellBase> cells, String lineSeparator) {
         boolean appendNewLine = false;
         StringBuilder sb = new StringBuilder();
         for (CellBase c : cells) {

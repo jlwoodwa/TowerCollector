@@ -9,52 +9,36 @@ import info.zamojski.soft.towercollector.collector.validators.specific.WcdmaCell
 
 public abstract class CellValidatorBase {
 
-    private GsmCellValidator gsmValidator;
-    private WcdmaCellValidator wcdmaValidator;
-    private LteCellValidator lteValidator;
-    private CdmaCellValidator cdmaValidator;
-    private NrCellValidator nrValidator;
-    private TdscdmaCellValidator tdscdmaValidator;
+    // Eagerly created, never reassigned: the validators are stateless and their constructors do
+    // no work, so a lazily-initialized field only added a write under the caller's control flow.
+    private final GsmCellValidator gsmValidator = new GsmCellValidator();
+    private final WcdmaCellValidator wcdmaValidator = new WcdmaCellValidator();
+    private final LteCellValidator lteValidator = new LteCellValidator();
+    private final CdmaCellValidator cdmaValidator = new CdmaCellValidator();
+    private final NrCellValidator nrValidator = new NrCellValidator();
+    private final TdscdmaCellValidator tdscdmaValidator = new TdscdmaCellValidator();
 
     protected GsmCellValidator getGsmValidator() {
-        if (gsmValidator == null) {
-            gsmValidator = new GsmCellValidator();
-        }
         return gsmValidator;
     }
 
     protected WcdmaCellValidator getWcdmaValidator() {
-        if (wcdmaValidator == null) {
-            wcdmaValidator = new WcdmaCellValidator();
-        }
         return wcdmaValidator;
     }
 
     protected LteCellValidator getLteValidator() {
-        if (lteValidator == null) {
-            lteValidator = new LteCellValidator();
-        }
         return lteValidator;
     }
 
     protected CdmaCellValidator getCdmaValidator() {
-        if (cdmaValidator == null) {
-            cdmaValidator = new CdmaCellValidator();
-        }
         return cdmaValidator;
     }
 
     protected NrCellValidator getNrValidator() {
-        if (nrValidator == null) {
-            nrValidator = new NrCellValidator();
-        }
         return nrValidator;
     }
 
     protected TdscdmaCellValidator getTdscdmaValidator() {
-        if (tdscdmaValidator == null) {
-            tdscdmaValidator = new TdscdmaCellValidator();
-        }
         return tdscdmaValidator;
     }
 }

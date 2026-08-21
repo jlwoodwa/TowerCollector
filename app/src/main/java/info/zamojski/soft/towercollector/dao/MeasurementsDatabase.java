@@ -53,9 +53,6 @@ public class MeasurementsDatabase {
 
     private boolean insertionFailureReported = false;
 
-    private Measurement lastMeasurementCache;
-    private Statistics lastStatisticsCache;
-
     private MeasurementsDatabase(Context context) {
         helper = new MeasurementsOpenHelper(context);
     }
@@ -192,7 +189,10 @@ public class MeasurementsDatabase {
                 Timber.d("insertMeasurement(): Insertion report: %s", resultString);
                 // report exception because it shouldn't occur (one time per app run)
                 if (!insertionFailureReported) {
-                    Throwable ex = new MeasurementInsertionFailedException("Measurements not inserted", resultString);
+                    // The report string is built from insert outcomes (booleans) only, so the
+                    // constructed exception is bottom; pinned because the enclosing pc would
+                    // otherwise be absorbed into this local's inferred type.
+                    @Label(sources = {}, sinks = {Sink.Ephemerally_processed, Sink.User_to_user_encrypted, Sink.Encrypted_in_transit, Sink.User_can_request_deletion, Sink.Sh_for_legal_reasons, Sink.Sh_initiated_by_user, Sink.Sh_only_with_consent, Sink.Only_transfer_anonymous_data, Sink.Sh_with_service_providers, Sink.Collected_App_functionality, Sink.Collected_Analytics, Sink.Collected_Developer_communications, Sink.Collected_Advertising_or_marketing, Sink.Collected_Security_and_compliance, Sink.Collected_Personalization, Sink.Collected_Account_management, Sink.Shared_App_functionality, Sink.Shared_Analytics, Sink.Shared_Developer_communications, Sink.Shared_Advertising_or_marketing, Sink.Shared_Security_and_compliance, Sink.Shared_Personalization, Sink.Shared_Account_management, Sink.Shared_with_service_providers}) Throwable ex = new MeasurementInsertionFailedException("Measurements not inserted", resultString);
                     MyApplication.handleSilentException(ex);
                     insertionFailureReported = true;
                 }
@@ -202,7 +202,6 @@ public class MeasurementsDatabase {
             Timber.e(ex, "insertMeasurement(): Error while saving measurement");
             MyApplication.handleSilentException(ex);
         } finally {
-            invalidateCache();
             db.endTransaction();
         }
         return result;
@@ -225,12 +224,8 @@ public class MeasurementsDatabase {
     }
 
     public Measurement getLastMeasurement() {
-        // Try to get from cache then read from DB (copy to local to avoid null if invalidated in the meantime)
-        Measurement lastMeasurementCacheCopy = this.lastMeasurementCache;
-        if (lastMeasurementCacheCopy != null) {
-            Timber.d("getLastMeasurement(): Value from cache: %s", lastMeasurementCacheCopy);
-            return lastMeasurementCacheCopy;
-        }
+        // Always read from the DB: the memo field used to be written from here, i.e. under the
+        // control flow of whichever caller happened to miss the cache first.
         Measurement lastMeasurement = null;
         List<Measurement> measurements = getMeasurements(CellSignalsTable.TABLE_NAME + "." + CellSignalsTable.COLUMN_MEASUREMENT_ID + " = (SELECT tm." + MeasurementsTable.COLUMN_ROW_ID + " FROM " + NotUploadedMeasurementsView.VIEW_NAME + " tm ORDER BY tm." + MeasurementsTable.COLUMN_MEASURED_AT + " DESC, tm." + MeasurementsTable.COLUMN_ROW_ID + " DESC LIMIT 0,1)",
                 null,
@@ -243,7 +238,6 @@ public class MeasurementsDatabase {
             lastMeasurement = measurements.get(0);
         }
         Timber.d("getLastMeasurement(): Value from DB: %s", lastMeasurement);
-        this.lastMeasurementCache = lastMeasurement;
         return lastMeasurement;
     }
 
@@ -264,12 +258,7 @@ public class MeasurementsDatabase {
     }
 
     public Statistics getMeasurementsStatistics() {
-        // Try to get from cache then read from DB (copy to local to avoid null if invalidated in the meantime)
-        Statistics lastStatisticsCacheCopy = this.lastStatisticsCache;
-        if (lastStatisticsCacheCopy != null) {
-            Timber.d("getMeasurementsStatistics(): Value from cache: %s", lastStatisticsCacheCopy);
-            return lastStatisticsCacheCopy;
-        }
+        // Always read from the DB, see getLastMeasurement().
         Statistics stats = new Statistics();
         SQLiteDatabase db = helper.getReadableDatabase();
         // calculate midnight date (beginning of day)
@@ -329,7 +318,6 @@ public class MeasurementsDatabase {
         }
         cursor.close();
         Timber.d("getMeasurementsStatistics(): Value from DB: %s", stats);
-        this.lastStatisticsCache = stats;
         return stats;
     }
 
@@ -631,7 +619,6 @@ public class MeasurementsDatabase {
             db.setTransactionSuccessful();
             Timber.d("deleteAllMeasurements(): Deleted %s cell signals, %s measurements", deletedCellSignals, deletedMeasurements);
         } finally {
-            invalidateCache();
             db.endTransaction();
         }
         return deletedCellSignals;
@@ -681,7 +668,6 @@ public class MeasurementsDatabase {
             db.setTransactionSuccessful();
             Timber.d("markAsUploaded(): Marked successfully");
         } finally {
-            invalidateCache();
             db.endTransaction();
         }
         return updated;
@@ -732,7 +718,6 @@ public class MeasurementsDatabase {
             db.setTransactionSuccessful();
             Timber.d("clearAllData(): Deleted %s cell signals, %s measurements, %s cells, cleaned %s stats", deletedCellSignals, deletedMeasurements, deletedCells, cleanedStats);
         } finally {
-            invalidateCache();
             db.endTransaction();
         }
         return deletedCellSignals;
@@ -845,11 +830,6 @@ public class MeasurementsDatabase {
         return sb.toString();
     }
 
-    private void invalidateCache() {
-        lastMeasurementCache = null;
-        lastStatisticsCache = null;
-    }
-
     // ========== GET DATABASE VERSION ========== //
 
     public static int getDatabaseVersion(Context context) {
@@ -895,20 +875,40 @@ public class MeasurementsDatabase {
 
     // ========== GET SINGLETON INSTANCE ========== //
 
-    public static MeasurementsDatabase getInstance(Context context) {
-        if (instance == null) {
-            synchronized (MeasurementsDatabase.class) {
-                if (instance == null) {
-                    instance = new MeasurementsDatabase(context);
-                }
+    /**
+     * Creates the singleton. Called exactly once, from {@link MyApplication#onCreate()}, so the
+     * constructor never runs underneath a reader's control flow. Constructing the instance only
+     * allocates a {@link MeasurementsOpenHelper} -- SQLiteOpenHelper's constructor performs no
+     * file access -- so this is cheap and cannot fail when the database file is missing; the
+     * file is created/opened on the first getReadableDatabase()/getWritableDatabase() call.
+     */
+    public static void initInstance(Context context) {
+        synchronized (MeasurementsDatabase.class) {
+            if (instance == null) {
+                instance = new MeasurementsDatabase(context);
             }
         }
+    }
+
+    public static MeasurementsDatabase getInstance(Context context) {
+        // Pure read: the instance is created eagerly at application startup (MyApplication
+        // .onCreate() -> initInstance) and never nulled, so no reader ever constructs it.
         return instance;
     }
 
+    /**
+     * Drops the cached database connection so that the next access reopens it. Previously this
+     * nulled the singleton, which made every reader a potential constructor call site; closing
+     * the helper has the same effect on the next get*Database() call (SQLiteOpenHelper clears
+     * its cached SQLiteDatabase) and additionally releases the old connection instead of
+     * abandoning it.
+     */
     public static void invalidateInstance() {
         synchronized (MeasurementsDatabase.class) {
-            instance = null;
+            MeasurementsDatabase local = instance;
+            if (local != null) {
+                local.helper.close();
+            }
         }
     }
 

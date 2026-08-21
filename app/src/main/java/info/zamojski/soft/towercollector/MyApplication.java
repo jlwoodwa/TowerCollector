@@ -98,6 +98,7 @@ public class MyApplication extends Application {
         // Logging to file is dependent on preferences but this will skip logging of initialization
         initPreferencesProvider();
         initLogger();
+        initDatabase();
         initACRA();
         // Exception handling must be initialized after ACRA to obtain crash details
         initUnhandledExceptionHandler();
@@ -229,6 +230,14 @@ public class MyApplication extends Application {
     private void initPreferencesProvider() {
         Timber.d("initProviders(): Initializing preferences");
         prefProvider = new PreferencesProvider(this);
+    }
+
+    private void initDatabase() {
+        // Create the database singleton up front instead of on first use. SQLiteOpenHelper's
+        // constructor performs no file access, so this neither opens nor creates the database
+        // file -- that still happens on the first getReadableDatabase()/getWritableDatabase().
+        Timber.d("initDatabase(): Initializing database");
+        MeasurementsDatabase.initInstance(this);
     }
 
     public void initTheme() {

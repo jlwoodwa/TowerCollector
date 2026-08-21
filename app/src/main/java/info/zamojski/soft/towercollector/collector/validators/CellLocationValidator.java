@@ -16,8 +16,10 @@ import android.telephony.gsm.GsmCellLocation;
 
 public class CellLocationValidator {
 
-    private GsmCellLocationValidator gsmValidator;
-    private CdmaCellLocationValidator cdmaValidator;
+    // Eagerly created, never reassigned (see CellValidatorBase): stateless validators, no-op
+    // constructors, so lazy initialization only bought a field write under caller control flow.
+    private final GsmCellLocationValidator gsmValidator = new GsmCellLocationValidator();
+    private final CdmaCellLocationValidator cdmaValidator = new CdmaCellLocationValidator();
 
     public boolean isValid(CellLocation cellLocation, int mcc, int mnc) {
         if (cellLocation instanceof GsmCellLocation) {
@@ -43,16 +45,10 @@ public class CellLocationValidator {
     }
 
     private GsmCellLocationValidator getGsmValidator() {
-        if (gsmValidator == null) {
-            gsmValidator = new GsmCellLocationValidator();
-        }
         return gsmValidator;
     }
 
     private CdmaCellLocationValidator getCdmaValidator() {
-        if (cdmaValidator == null) {
-            cdmaValidator = new CdmaCellLocationValidator();
-        }
         return cdmaValidator;
     }
 

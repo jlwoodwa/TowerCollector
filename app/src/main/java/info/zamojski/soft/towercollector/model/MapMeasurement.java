@@ -61,9 +61,8 @@ public class MapMeasurement extends MeasurementBase implements Serializable {
         mm.setLatitude(m.getLatitude());
         mm.setLongitude(m.getLongitude());
         mm.setMeasuredAt(m.getMeasuredAt());
-        List<MapCell> cc = mm.getCells();
         for (Cell c : m.getCells()) {
-            cc.add(MapCell.fromCell(c));
+            mm.addCell(MapCell.fromCell(c));
         }
         return mm;
     }

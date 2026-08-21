@@ -6,6 +6,8 @@ package info.zamojski.soft.towercollector.model;
 
 import android.content.Context;
 
+import org.checkerframework.checker.PNL.qual.PolyLabel;
+
 import java.util.List;
 
 import info.zamojski.soft.towercollector.utils.NetworkTypeUtils;
@@ -49,7 +51,7 @@ public abstract class MeasurementBase {
         this.measuredAt = measuredAt;
     }
 
-    protected String getDescription(Context context, List<? extends CellBase> cells, String lineSeparator) {
+    protected @PolyLabel String getDescription(Context context, List<? extends @PolyLabel CellBase> cells, String lineSeparator) {
         boolean appendNewLine = false;
         StringBuilder sb = new StringBuilder();
         for (CellBase c : cells) {

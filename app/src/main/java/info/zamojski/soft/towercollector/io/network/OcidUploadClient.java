@@ -10,6 +10,7 @@ import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeUnit;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.*;
 import info.zamojski.soft.towercollector.io.network.compatibility.ExtendedOkHttpClientBuilder;
+import org.checkerframework.checker.PNL.PolyBegin;
 import me.tianshili.annotationlib.DataTransmission;
 import me.tianshili.annotationlib.collectionAttribute.CollectedFor;
 import me.tianshili.annotationlib.collectionAttribute.EncryptionInTransit;
@@ -42,6 +43,7 @@ public class OcidUploadClient extends ClientBase implements IUploadClient {
     private final String apiKey;
     private long fileSize;
 
+    @PolyBegin
     public OcidUploadClient(String url, String appId, String apiKey) {
         this.url = url;
         this.appId = appId;

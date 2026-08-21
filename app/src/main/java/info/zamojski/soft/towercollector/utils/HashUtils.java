@@ -11,11 +11,14 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import info.zamojski.soft.towercollector.model.Measurement;
+
+import org.checkerframework.checker.PNL.qual.PolyLabel;
+
 import timber.log.Timber;
 
 public class HashUtils {
 
-    public static String toSha1(String text) {
+    public static @PolyLabel String toSha1(@PolyLabel String text) {
         final String hashingAlgorithm = "SHA-1";
         final String textEncoding = "UTF-8";
         try {
@@ -35,11 +38,11 @@ public class HashUtils {
         return text;
     }
 
-    public static String toSha1(Measurement m) {
+    public static @PolyLabel String toSha1(@PolyLabel Measurement m) {
         return toSha1(m.getLatitude(), m.getLongitude(), m.getGpsAccuracy(), m.getGpsSpeed(), m.getGpsBearing(), m.getGpsAltitude());
     }
 
-    public static String toSha1(double latitude, double longitude, double accuracy, double speed, double bearing, double altitude) {
+    public static @PolyLabel String toSha1(@PolyLabel double latitude, @PolyLabel double longitude, @PolyLabel double accuracy, @PolyLabel double speed, @PolyLabel double bearing, @PolyLabel double altitude) {
         final Locale LOCALE = Locale.ENGLISH;
 
         NumberFormat coordsDoubleFormatter = NumberFormat.getNumberInstance(LOCALE);

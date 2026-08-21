@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import info.zamojski.soft.towercollector.BuildConfig;
 import info.zamojski.soft.towercollector.io.network.compatibility.ExtendedOkHttpClientBuilder;
+import org.checkerframework.checker.PNL.PolyBegin;
 import me.tianshili.annotationlib.DataTransmission;
 import me.tianshili.annotationlib.collectionAttribute.CollectedFor;
 import me.tianshili.annotationlib.collectionAttribute.EncryptionInTransit;
@@ -44,6 +45,7 @@ public class MozillaUploadClient extends ClientBase implements IUploadClient {
 
     private final String uploadUrl;
 
+    @PolyBegin
     public MozillaUploadClient(String url) {
         this.uploadUrl = url;
     }

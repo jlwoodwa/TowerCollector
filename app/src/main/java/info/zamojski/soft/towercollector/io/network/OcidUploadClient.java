@@ -108,7 +108,8 @@ public class OcidUploadClient extends ClientBase implements IUploadClient {
             return RequestResult.InvalidApiKey;
         }
         if (code == 400) {
-            RuntimeException ex = new RequestException(body);
+            Timber.d("handleResponse(): Server rejected the upload request: %s", body);
+            RuntimeException ex = new RequestException();
             reportException(ex);
             return RequestResult.ConfigurationError;
         }
@@ -116,7 +117,8 @@ public class OcidUploadClient extends ClientBase implements IUploadClient {
         if (code != 302) {
             if (body.equalsIgnoreCase("Exceeded filesize limit."))
                 body += ". Actual size=" + fileSize + " bytes.";
-            reportException(new RequestException(body));
+            Timber.d("handleResponse(): Server rejected the upload request: %s", body);
+            reportException(new RequestException());
         }
         return RequestResult.ConnectionError;
     }

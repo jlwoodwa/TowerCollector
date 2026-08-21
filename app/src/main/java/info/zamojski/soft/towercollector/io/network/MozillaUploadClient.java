@@ -90,18 +90,21 @@ public class MozillaUploadClient extends ClientBase implements IUploadClient {
             return RequestResult.ServerError;
         }
         if (code == 400) {
-            RuntimeException ex = new RequestException(body);
+            Timber.d("handleResponse(): Server rejected the upload request: %s", body);
+            RuntimeException ex = new RequestException();
             reportException(ex);
             return RequestResult.ConfigurationError;
         }
         if (code == 403) {
-            RuntimeException ex = new RequestException(body);
+            Timber.d("handleResponse(): Server rejected the upload request: %s", body);
+            RuntimeException ex = new RequestException();
             reportException(ex);
             return RequestResult.LimitExceeded;
         }
         // don't report captive portals
         if (code != 302) {
-            RuntimeException ex = new RequestException(body);
+            Timber.d("handleResponse(): Server rejected the upload request: %s", body);
+            RuntimeException ex = new RequestException();
             reportException(ex);
         }
         return RequestResult.ConnectionError;

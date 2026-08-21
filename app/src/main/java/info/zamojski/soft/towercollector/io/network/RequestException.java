@@ -4,16 +4,14 @@
 
 package info.zamojski.soft.towercollector.io.network;
 
-import timber.log.Timber;
-
 public class RequestException extends RuntimeException {
 
     private static final String MESSAGE = "Server rejected the upload request";
 
-    public RequestException(String responseBody) {
-        // The reply body can echo the uploaded measurements, and this exception is reported
-        // off-device by ACRA. Keep the reported message constant; log the body locally only.
+    // The server reply body can echo the uploaded measurements, and this exception is
+    // reported off-device by ACRA. It carries no response data at all: callers log the
+    // body locally with Timber before constructing this.
+    public RequestException() {
         super(MESSAGE);
-        Timber.d("RequestException(): Server response: %s", responseBody);
     }
 }

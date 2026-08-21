@@ -53,6 +53,9 @@ public class MeasurementsDatabase {
 
     private boolean insertionFailureReported = false;
 
+    private Measurement lastMeasurementCache;
+    private Statistics lastStatisticsCache;
+
     private MeasurementsDatabase(Context context) {
         helper = new MeasurementsOpenHelper(context);
     }
@@ -202,6 +205,7 @@ public class MeasurementsDatabase {
             Timber.e(ex, "insertMeasurement(): Error while saving measurement");
             MyApplication.handleSilentException(ex);
         } finally {
+            invalidateCache();
             db.endTransaction();
         }
         return result;
@@ -224,8 +228,12 @@ public class MeasurementsDatabase {
     }
 
     public Measurement getLastMeasurement() {
-        // Always read from the DB: the memo field used to be written from here, i.e. under the
-        // control flow of whichever caller happened to miss the cache first.
+        // Try to get from cache then read from DB (copy to local to avoid null if invalidated in the meantime)
+        Measurement lastMeasurementCacheCopy = this.lastMeasurementCache;
+        if (lastMeasurementCacheCopy != null) {
+            Timber.d("getLastMeasurement(): Value from cache: %s", lastMeasurementCacheCopy);
+            return lastMeasurementCacheCopy;
+        }
         Measurement lastMeasurement = null;
         List<Measurement> measurements = getMeasurements(CellSignalsTable.TABLE_NAME + "." + CellSignalsTable.COLUMN_MEASUREMENT_ID + " = (SELECT tm." + MeasurementsTable.COLUMN_ROW_ID + " FROM " + NotUploadedMeasurementsView.VIEW_NAME + " tm ORDER BY tm." + MeasurementsTable.COLUMN_MEASURED_AT + " DESC, tm." + MeasurementsTable.COLUMN_ROW_ID + " DESC LIMIT 0,1)",
                 null,
@@ -238,6 +246,7 @@ public class MeasurementsDatabase {
             lastMeasurement = measurements.get(0);
         }
         Timber.d("getLastMeasurement(): Value from DB: %s", lastMeasurement);
+        this.lastMeasurementCache = lastMeasurement;
         return lastMeasurement;
     }
 
@@ -258,7 +267,12 @@ public class MeasurementsDatabase {
     }
 
     public Statistics getMeasurementsStatistics() {
-        // Always read from the DB, see getLastMeasurement().
+        // Try to get from cache then read from DB (copy to local to avoid null if invalidated in the meantime)
+        Statistics lastStatisticsCacheCopy = this.lastStatisticsCache;
+        if (lastStatisticsCacheCopy != null) {
+            Timber.d("getMeasurementsStatistics(): Value from cache: %s", lastStatisticsCacheCopy);
+            return lastStatisticsCacheCopy;
+        }
         Statistics stats = new Statistics();
         SQLiteDatabase db = helper.getReadableDatabase();
         // calculate midnight date (beginning of day)
@@ -318,6 +332,7 @@ public class MeasurementsDatabase {
         }
         cursor.close();
         Timber.d("getMeasurementsStatistics(): Value from DB: %s", stats);
+        this.lastStatisticsCache = stats;
         return stats;
     }
 
@@ -619,6 +634,7 @@ public class MeasurementsDatabase {
             db.setTransactionSuccessful();
             Timber.d("deleteAllMeasurements(): Deleted %s cell signals, %s measurements", deletedCellSignals, deletedMeasurements);
         } finally {
+            invalidateCache();
             db.endTransaction();
         }
         return deletedCellSignals;
@@ -668,6 +684,7 @@ public class MeasurementsDatabase {
             db.setTransactionSuccessful();
             Timber.d("markAsUploaded(): Marked successfully");
         } finally {
+            invalidateCache();
             db.endTransaction();
         }
         return updated;
@@ -718,6 +735,7 @@ public class MeasurementsDatabase {
             db.setTransactionSuccessful();
             Timber.d("clearAllData(): Deleted %s cell signals, %s measurements, %s cells, cleaned %s stats", deletedCellSignals, deletedMeasurements, deletedCells, cleanedStats);
         } finally {
+            invalidateCache();
             db.endTransaction();
         }
         return deletedCellSignals;
@@ -828,6 +846,11 @@ public class MeasurementsDatabase {
         }
 
         return sb.toString();
+    }
+
+    private void invalidateCache() {
+        lastMeasurementCache = null;
+        lastStatisticsCache = null;
     }
 
     // ========== GET DATABASE VERSION ========== //

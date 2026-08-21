@@ -86,10 +86,17 @@ public class ExternalBroadcastReceiver extends BroadcastReceiver {
         startCollectorServiceInternal(context, source, true);
     }
 
-    @DataAccess(
-            id = StartupIntent_AppInteract,
-            dataType = {DataType.AppActivity_AppInteractions})
-    private void startCollectorServiceInternal(Context context, IntentSource source, boolean isBackground) {
+    // The @DataAccess sits on `source`, not on the method: the datum accessed here is the
+    // startup intent's IntentSource. A method-level @DataAccess is copied by the converter onto
+    // EVERY parameter (MatchaLabelConversion/Parser.java:344-352), which stamped
+    // App_interactions onto the `Context` handle -- and `context` is this app's universal
+    // argument, so the label reached GpsUtils/PermissionUtils/MeasurementsDatabase through
+    // WPI's parameter join and became App_interactions on every measurement read.
+    private void startCollectorServiceInternal(Context context,
+            @DataAccess(
+                    id = StartupIntent_AppInteract,
+                    dataType = {DataType.AppActivity_AppInteractions})
+            IntentSource source, boolean isBackground) {
         if (!canStartBackgroundService(context)) {
             return;
         }

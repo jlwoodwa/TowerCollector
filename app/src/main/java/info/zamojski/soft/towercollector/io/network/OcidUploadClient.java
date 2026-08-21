@@ -111,8 +111,7 @@ public class OcidUploadClient extends ClientBase implements IUploadClient {
         }
         if (code == 400) {
             Timber.d("handleResponse(): Server rejected the upload request: %s", body);
-            RuntimeException ex = new RequestException();
-            reportException(ex);
+            reportException(new RequestException());
             return RequestResult.ConfigurationError;
         }
         // don't report captive portals

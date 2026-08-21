@@ -28,6 +28,17 @@ public abstract class ClientBase {
         reportException(ex);
     }
 
+    /**
+     * Reports a failed upload request to ACRA, which transmits off-device.
+     * <p>
+     * Callers must pass the exception <em>directly</em> ({@code reportException(new
+     * RequestException())}) and never park it in a local first: a local declared inside a branch
+     * on the server's response code has that branch's pc joined into its label, so the (otherwise
+     * constant, response-free) exception arrives here carrying the upload's own
+     * {Approximate_location, Precise_location} label and fails handleSilentException's
+     * declaration. The same {@code new} expression passed as an argument is not pc-joined.
+     * Fixtures: Reports/artifacts/fixtures/clientbase/CB6.java (repro) and CB7.java (fix).
+     */
     protected void reportException(Exception ex) {
         MyApplication.handleSilentException(ex);
     }

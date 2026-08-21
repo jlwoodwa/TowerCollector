@@ -38,7 +38,12 @@ public class HashUtils {
         return text;
     }
 
-    public static @PolyLabel String toSha1(@PolyLabel Measurement m) {
+    // NOT @PolyLabel: this overload is monomorphic in practice (one call site,
+    // MeasurementsDatabase.insertMeasurement) and its body reads Measurement's getters, whose
+    // labels are concrete -- a @PolyLabel return can never be satisfied by a concrete body.
+    // The String/double conduits below stay @PolyLabel, which is what keeps the ACRA and the
+    // upload call chains apart.
+    public static String toSha1(Measurement m) {
         return toSha1(m.getLatitude(), m.getLongitude(), m.getGpsAccuracy(), m.getGpsSpeed(), m.getGpsBearing(), m.getGpsAltitude());
     }
 

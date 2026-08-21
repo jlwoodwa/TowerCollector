@@ -4,6 +4,10 @@
 
 package info.zamojski.soft.towercollector;
 
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorService_LocationListener_PreciseLoc;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorService_NetMonsterListener_ApproxLoc;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorService_registerApi_ApproxLoc;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorService_telephonyTriple;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorService_Diag;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.DatabaseOperations_DbString_Diag;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.HelpDialogBox_AppInteract;
@@ -312,7 +316,9 @@ public class MyApplication extends Application {
     }
 
     @DataTransmission(
-            accessId = {MainActivity_onClick_AppInteract, HelpDialogBox_AppInteract, CollectorService_Diag},
+            accessId = {MainActivity_onClick_AppInteract, HelpDialogBox_AppInteract, CollectorService_Diag,
+                       CollectorService_registerApi_ApproxLoc, CollectorService_NetMonsterListener_ApproxLoc,
+                       CollectorService_LocationListener_PreciseLoc, CollectorService_telephonyTriple},
             collectionAttribute = {TransmittedOffDevice.True, CollectedFor.Analytics, OptionalCollection.True, NotStoredInBackend.False, EncryptionInTransit.False, UserRequestDelete.False, UserToUserEncryption.False},
             sharingAttribute = {SharedWithThirdParty.True, SharedFor.Analytics, OnlySharedWithServiceProviders.True, OnlySharedForLegalPurposes.False, OnlyInitiatedByUser.False, OnlyAfterGettingUserConsent.False, OnlyTransferringAnonymousData.False})
     public static IAnalyticsReportingService getAnalytics() {

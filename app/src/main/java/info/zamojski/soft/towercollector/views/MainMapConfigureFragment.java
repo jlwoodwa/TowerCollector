@@ -28,15 +28,7 @@ import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
-import org.checkerframework.checker.PNL.qual.Top;
-import org.checkerframework.framework.qual.DefaultQualifierForUse;
 
-// PermissionsDispatcher generates MainMapConfigureFragmentPermissionsDispatcher, which stores this
-// class in `new WeakReference<MainMapConfigureFragment>(target)`. That type argument takes the checker's
-// OTHERWISE default (@Bottom) while `target` is @Top, and generated files cannot be
-// annotated. @DefaultQualifierForUse sets the qualifier for every unannotated *use* of
-// this type, including inside generated code, so declaring it here fixes those sites.
-@DefaultQualifierForUse(Top.class)
 @RuntimePermissions
 public class MainMapConfigureFragment extends MainFragmentBase {
 

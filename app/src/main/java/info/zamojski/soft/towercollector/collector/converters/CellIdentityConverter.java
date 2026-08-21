@@ -124,7 +124,9 @@ public class CellIdentityConverter {
                     .append("_").append(identity.getNetworkId())
                     .append("_").append(identity.getBasestationId());
         } else {
-            Exception ex = new UnsupportedOperationException("Cell identity type not supported `" + cellInfo.getClass().getName() + "` = `" + cellInfo.toString() + "`");
+            // Same as NetMonsterCellConverter: a CellInfo dump is tower identity, and this
+            // exception is uploaded by ACRA. The class name identifies the unhandled type.
+            Exception ex = new UnsupportedOperationException("Cell identity type not supported `" + cellInfo.getClass().getName() + "`");
             Timber.e(ex);
             MyApplication.handleSilentException(ex);
         }

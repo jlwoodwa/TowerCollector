@@ -40,6 +40,11 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import org.checkerframework.checker.PNL.qual.Label;
+import org.checkerframework.checker.PNL.qual.Sink;
+import org.checkerframework.checker.PNL.qual.Source;
+import org.checkerframework.checker.PNL.qual.Top;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -853,13 +858,27 @@ public class CollectorService extends Service {
         return newWakeLock;
     }
 
+    // Trusted boundary. The reflective call whose result this receives is
+    // TelephonyManager.getNeighboringCellInfo(); java/lang/reflect/Method.astub types
+    // Method.invoke()'s result @Top because the callee is not statically known, and the
+    // Tuple<Method, Boolean> shape defeats reflection resolution, so the label is asserted
+    // here instead of being derived. It is the concrete expansion of the
+    // @PolySinks(sources = {Approximate_location}) that getAllCellInfo() and getCellLocation()
+    // carry in android/telephony/TelephonyManager.astub: sources = {Approximate_location},
+    // all sinks (a bare @PolySinks expands to no sources / all sinks).
+    @SuppressWarnings({"unchecked", "cast.unsafe", "return", "return.type.incompatible",
+                       "assignment", "assignment.type.incompatible"})
+    private static @Label(sources = {Source.Approximate_location}, sinks = {Sink.Ephemerally_processed, Sink.User_to_user_encrypted, Sink.Encrypted_in_transit, Sink.User_can_request_deletion, Sink.Sh_for_legal_reasons, Sink.Sh_initiated_by_user, Sink.Sh_only_with_consent, Sink.Only_transfer_anonymous_data, Sink.Sh_with_service_providers, Sink.Collected_App_functionality, Sink.Collected_Analytics, Sink.Collected_Developer_communications, Sink.Collected_Advertising_or_marketing, Sink.Collected_Security_and_compliance, Sink.Collected_Personalization, Sink.Collected_Account_management, Sink.Shared_App_functionality, Sink.Shared_Analytics, Sink.Shared_Developer_communications, Sink.Shared_Advertising_or_marketing, Sink.Shared_Security_and_compliance, Sink.Shared_Personalization, Sink.Shared_Account_management, Sink.Shared_with_service_providers}) List<NeighboringCellInfo> castNeighboringCellInfo(@Top Object reflectiveResult) {
+        return (List<NeighboringCellInfo>) reflectiveResult;
+    }
+
     private List<NeighboringCellInfo> getNeighboringCellInfo(TelephonyManager telephonyManager) {
         try {
             if (getNeighboringCellInfoMethod == null) {
                 getNeighboringCellInfoMethod = new Tuple<>(TelephonyManager.class.getMethod("getNeighboringCellInfo"), Boolean.TRUE);
             }
             if (getNeighboringCellInfoMethod.getItem2() == Boolean.TRUE) {
-                return (List<NeighboringCellInfo>) getNeighboringCellInfoMethod.getItem1().invoke(telephonyManager);
+                return castNeighboringCellInfo(getNeighboringCellInfoMethod.getItem1().invoke(telephonyManager));
             }
         } catch (NoSuchMethodException ex) {
             getNeighboringCellInfoMethod = new Tuple<>(null, Boolean.FALSE);

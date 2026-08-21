@@ -96,7 +96,12 @@ public class NetMonsterCellConverter {
                     .append("_").append(cdmaCell.getNid())
                     .append("_").append(cdmaCell.getBid());
         } else {
-            Exception ex = new UnsupportedOperationException("Cell identity type not supported `" + cell.getClass().getName() + "` = `" + cell.toString() + "`");
+            // The cell object itself is deliberately NOT dumped into the message. This exception
+            // is handed to ACRA (MyApplication.handleSilentException below), so anything in the
+            // message leaves the device in a crash report -- and an ICell is a tower identity,
+            // i.e. coarse location. The class name is the actionable part: it names the cell type
+            // this converter does not yet handle, which is all the report needs to be fixed.
+            Exception ex = new UnsupportedOperationException("Cell identity type not supported `" + cell.getClass().getName() + "`");
             Timber.e(ex);
             MyApplication.handleSilentException(ex);
         }

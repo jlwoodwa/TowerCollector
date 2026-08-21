@@ -127,15 +127,7 @@ import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 import timber.log.Timber;
-import org.checkerframework.checker.PNL.qual.Top;
-import org.checkerframework.framework.qual.DefaultQualifierForUse;
 
-// PermissionsDispatcher generates MainActivityPermissionsDispatcher, which stores this
-// class in `new WeakReference<MainActivity>(target)`. That type argument takes the checker's
-// OTHERWISE default (@Bottom) while `target` is @Top, and generated files cannot be
-// annotated. @DefaultQualifierForUse sets the qualifier for every unannotated *use* of
-// this type, including inside generated code, so declaring it here fixes those sites.
-@DefaultQualifierForUse(Top.class)
 @RuntimePermissions
 public class MainActivity extends AppCompatActivity
         implements TabLayout.OnTabSelectedListener, ExportProgressDialogFragment.OnExportCancelledListener, UploaderProgressDialogFragment.OnUploaderCancelledListener {

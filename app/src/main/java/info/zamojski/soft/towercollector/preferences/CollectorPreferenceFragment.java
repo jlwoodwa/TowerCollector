@@ -32,15 +32,7 @@ import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 import timber.log.Timber;
-import org.checkerframework.checker.PNL.qual.Top;
-import org.checkerframework.framework.qual.DefaultQualifierForUse;
 
-// PermissionsDispatcher generates CollectorPreferenceFragmentPermissionsDispatcher, which stores this
-// class in `new WeakReference<CollectorPreferenceFragment>(target)`. That type argument takes the checker's
-// OTHERWISE default (@Bottom) while `target` is @Top, and generated files cannot be
-// annotated. @DefaultQualifierForUse sets the qualifier for every unannotated *use* of
-// this type, including inside generated code, so declaring it here fixes those sites.
-@DefaultQualifierForUse(Top.class)
 @RuntimePermissions
 public class CollectorPreferenceFragment extends DialogEnabledPreferenceFragment implements OnSharedPreferenceChangeListener {
 

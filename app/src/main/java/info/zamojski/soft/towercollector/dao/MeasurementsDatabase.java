@@ -22,6 +22,8 @@ import java.util.Map;
 import info.zamojski.soft.towercollector.MyApplication;
 import info.zamojski.soft.towercollector.dao.migration.DbMigrationHelper;
 import info.zamojski.soft.towercollector.enums.NetworkGroup;
+import org.checkerframework.checker.PNL.qual.Label;
+import org.checkerframework.checker.PNL.qual.Sink;
 import info.zamojski.soft.towercollector.model.AnalyticsStatistics;
 import info.zamojski.soft.towercollector.model.Boundaries;
 import info.zamojski.soft.towercollector.model.Cell;
@@ -40,7 +42,12 @@ public class MeasurementsDatabase {
 
     private static final int NUM_OF_DELETIONS_PER_ONE_QUERY = 50;
 
-    private final MeasurementsOpenHelper helper;
+    // A database HANDLE, not data. The sensitivity of what is read through it comes from
+    // query()/getInt() resolving @PolyLabel against their arguments -- the same rule
+    // SQLiteDatabase.astub already states for openDatabase's result. Pinned because rule 10.I
+    // otherwise folds this constructor's @Top @Begin into the field, which makes every value
+    // read out of the database @Top.
+    private final @Label(sources = {}, sinks = {Sink.Ephemerally_processed, Sink.User_to_user_encrypted, Sink.Encrypted_in_transit, Sink.User_can_request_deletion, Sink.Sh_for_legal_reasons, Sink.Sh_initiated_by_user, Sink.Sh_only_with_consent, Sink.Only_transfer_anonymous_data, Sink.Sh_with_service_providers, Sink.Collected_App_functionality, Sink.Collected_Analytics, Sink.Collected_Developer_communications, Sink.Collected_Advertising_or_marketing, Sink.Collected_Security_and_compliance, Sink.Collected_Personalization, Sink.Collected_Account_management, Sink.Shared_App_functionality, Sink.Shared_Analytics, Sink.Shared_Developer_communications, Sink.Shared_Advertising_or_marketing, Sink.Shared_Security_and_compliance, Sink.Shared_Personalization, Sink.Shared_Account_management, Sink.Shared_with_service_providers}) MeasurementsOpenHelper helper;
 
     private static volatile MeasurementsDatabase instance = null;
 

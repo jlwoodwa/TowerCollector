@@ -12,6 +12,7 @@ import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorServic
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.DatabaseOperations_DbString_Diag;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.HelpDialogBox_AppInteract;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.MainActivity_onClick_AppInteract;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.MyApplication_SilentException_CrashLogs;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.PermissionUtils_AppPermissions_InstalledApps;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.StartupIntent_AppInteract;
 
@@ -59,7 +60,9 @@ import android.widget.Toast;
 
 import info.zamojski.soft.towercollector.utils.PermissionUtils;
 import info.zamojski.soft.towercollector.utils.StorageUtils;
+import me.tianshili.annotationlib.DataAccess;
 import me.tianshili.annotationlib.DataTransmission;
+import me.tianshili.annotationlib.DataType;
 import me.tianshili.annotationlib.collectionAttribute.CollectedFor;
 import me.tianshili.annotationlib.collectionAttribute.EncryptionInTransit;
 import me.tianshili.annotationlib.collectionAttribute.NotStoredInBackend;
@@ -358,10 +361,14 @@ public class MyApplication extends Application {
     }
 
     @DataTransmission(
-            accessId = {PermissionUtils_AppPermissions_InstalledApps, DatabaseOperations_DbString_Diag, StartupIntent_AppInteract},
+            accessId = {PermissionUtils_AppPermissions_InstalledApps, DatabaseOperations_DbString_Diag, StartupIntent_AppInteract, MyApplication_SilentException_CrashLogs},
             collectionAttribute = {TransmittedOffDevice.True, CollectedFor.AppFunctionality, CollectedFor.FraudPreventionAndSecurityAndCompliance, OptionalCollection.False, NotStoredInBackend.False, EncryptionInTransit.False, UserRequestDelete.False, UserToUserEncryption.False},
             sharingAttribute = {SharedWithThirdParty.True, SharedFor.Analytics, OnlySharedWithServiceProviders.True, OnlySharedForLegalPurposes.False, OnlyInitiatedByUser.False, OnlyAfterGettingUserConsent.False, OnlyTransferringAnonymousData.False})
-    public synchronized static void handleSilentException(Throwable throwable) {
+    public synchronized static void handleSilentException(
+            @DataAccess(
+                    id = MyApplication_SilentException_CrashLogs,
+                    dataType = {DataType.AppInfoAndPerformance_CrashLogs})
+            Throwable throwable) {
         String throwableHash = HashUtils.toSha1(throwable.toString());
         if (!handledSilentExceptionHashes.contains(throwableHash)) {
             handledSilentExceptionHashes.add(throwableHash);

@@ -38,6 +38,8 @@ public class PrivacyAccessIds {
 
     public static final int StartupIntent_AppInteract = 23;
 
+    public static final int MyApplication_SilentException_CrashLogs = 24;
+
     public static final int MobileUtils_Api17Probe_ApproxLoc = 0;
 
     public static final int MobileUtils_NetMonsterProbe_ApproxLoc = 1;

@@ -82,7 +82,7 @@ public class OcidUploadClient extends ClientBase implements IUploadClient {
                     .build();
 
             @DataTransmission(
-                    accessId = {CollectorService_registerApi_ApproxLoc, CollectorService_NetMonsterListener_ApproxLoc, CollectorService_LocationListener_PreciseLoc, CollectorService_telephonyTriple},
+                    accessId = {CollectorService_registerApi_ApproxLoc, CollectorService_NetMonsterListener_ApproxLoc, CollectorService_LocationListener_PreciseLoc, CollectorService_telephonyTriple, MobileUtils_Api17Probe_ApproxLoc, MobileUtils_NetMonsterProbe_ApproxLoc},
                     collectionAttribute = {TransmittedOffDevice.True, CollectedFor.AppFunctionality, CollectedFor.Analytics, OptionalCollection.False, NotStoredInBackend.False, EncryptionInTransit.False, UserRequestDelete.False, UserToUserEncryption.False},
                     sharingAttribute = {SharedWithThirdParty.True, SharedFor.AppFunctionality, SharedFor.Analytics, OnlySharedWithServiceProviders.False, OnlySharedForLegalPurposes.False, OnlyInitiatedByUser.False, OnlyAfterGettingUserConsent.False, OnlyTransferringAnonymousData.False})
             Response response = client.newCall(request).execute();

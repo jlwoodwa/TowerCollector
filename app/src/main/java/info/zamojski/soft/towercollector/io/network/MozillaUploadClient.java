@@ -7,6 +7,8 @@ package info.zamojski.soft.towercollector.io.network;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorService_LocationListener_PreciseLoc;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorService_NetMonsterListener_ApproxLoc;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorService_registerApi_ApproxLoc;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.MobileUtils_Api17Probe_ApproxLoc;
+import static info.zamojski.soft.towercollector.PrivacyAccessIds.MobileUtils_NetMonsterProbe_ApproxLoc;
 import static info.zamojski.soft.towercollector.PrivacyAccessIds.CollectorService_telephonyTriple;
 
 import java.io.IOException;
@@ -69,7 +71,7 @@ public class MozillaUploadClient extends ClientBase implements IUploadClient {
                     .build();
 
             @DataTransmission(
-                    accessId = {CollectorService_registerApi_ApproxLoc, CollectorService_NetMonsterListener_ApproxLoc, CollectorService_LocationListener_PreciseLoc, CollectorService_telephonyTriple},
+                    accessId = {CollectorService_registerApi_ApproxLoc, CollectorService_NetMonsterListener_ApproxLoc, CollectorService_LocationListener_PreciseLoc, CollectorService_telephonyTriple, MobileUtils_Api17Probe_ApproxLoc, MobileUtils_NetMonsterProbe_ApproxLoc},
                     collectionAttribute = {TransmittedOffDevice.True, CollectedFor.AppFunctionality, CollectedFor.Analytics, OptionalCollection.False, NotStoredInBackend.False, EncryptionInTransit.False, UserRequestDelete.False, UserToUserEncryption.False},
                     sharingAttribute = {SharedWithThirdParty.True, SharedFor.AppFunctionality, SharedFor.Analytics, OnlySharedWithServiceProviders.False, OnlySharedForLegalPurposes.False, OnlyInitiatedByUser.False, OnlyAfterGettingUserConsent.False, OnlyTransferringAnonymousData.False})
             Response response = client.newCall(request).execute();

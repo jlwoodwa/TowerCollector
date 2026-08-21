@@ -4,8 +4,6 @@
 
 package info.zamojski.soft.towercollector.files.formatters.json;
 
-import org.checkerframework.checker.PNL.qual.PolyLabel;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,7 +19,7 @@ public class JsonMozillaExportFormatter extends JsonMozillaFormatterBase impleme
     }
 
     @Override
-    public @PolyLabel String formatList(@PolyLabel List<@PolyLabel Measurement> ms) throws JSONException {
+    public String formatList(List<Measurement> ms) throws JSONException {
         StringBuilder sb = new StringBuilder();
         List<JSONObject> rawItems = formatItems(ms);
         boolean notFirst = false;

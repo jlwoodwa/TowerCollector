@@ -377,6 +377,7 @@ public class CollectorService extends Service {
         String collectorApiVersion = MyApplication.getPreferencesProvider().getCollectorApiVersion();
         if (getString(R.string.preferences_collector_api_version_entries_value_auto).equals(collectorApiVersion)) {
             // auto detection
+            apiVersionUsed = 0;
             MyApplication.getAnalytics().sendPrefsCollectorApiVersion(0);
             if (MobileUtils.isNetMonsterCoreApiCompatible(MyApplication.getApplication())) {
                 registerNetMonsterListener();
@@ -387,14 +388,17 @@ public class CollectorService extends Service {
             }
         } else if (getString(R.string.preferences_collector_api_version_entries_value_api_netmonster).equals(collectorApiVersion)) {
             // API NetMonster Core forced
+            apiVersionUsed = 100;
             MyApplication.getAnalytics().sendPrefsCollectorApiVersion(100);
             registerNetMonsterListener();
         } else if (getString(R.string.preferences_collector_api_version_entries_value_api_17).equals(collectorApiVersion)) {
             // API 17 forced
+            apiVersionUsed = 17;
             MyApplication.getAnalytics().sendPrefsCollectorApiVersion(17);
             registerApi17PhoneStateListener();
         } else {
             // API 1 forced
+            apiVersionUsed = 1;
             MyApplication.getAnalytics().sendPrefsCollectorApiVersion(1);
             registerApi1PhoneStateListener();
         }
@@ -503,7 +507,6 @@ public class CollectorService extends Service {
                 }
             }
         }, 0, CELL_UPDATE_INTERVAL);
-        apiVersionUsed = 17;
     }
 
     private void registerApi1PhoneStateListener() {
@@ -567,7 +570,6 @@ public class CollectorService extends Service {
                 }
             }
         }, 0, CELL_UPDATE_INTERVAL);
-        apiVersionUsed = 1;
     }
 
     private void registerNetMonsterListener() {
@@ -600,7 +602,6 @@ public class CollectorService extends Service {
                 }
             }
         }, 0, CELL_UPDATE_INTERVAL);
-        apiVersionUsed = 100;
     }
 
     private void processCellInfo(List<CellInfo> cellInfo) {

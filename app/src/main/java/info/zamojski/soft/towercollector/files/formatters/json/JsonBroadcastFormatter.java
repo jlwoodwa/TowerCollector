@@ -41,8 +41,18 @@ public class JsonBroadcastFormatter extends JsonFormatterBase implements IJsonFo
         if (ms.size() == 0) {
             return new JSONObject().toString();
         }
-        JSONObject root = new JSONObject();
+        // Preserves the original overwrite semantics: each iteration replaced every key of the
+        // one root object, so the produced JSON was always the last measurement's.
+        String result = null;
         for (Measurement m : ms) {
+            result = format(m);
+        }
+        return result;
+    }
+
+    public String format(Measurement m) throws JSONException {
+        JSONObject root = new JSONObject();
+        {
             root.put("measured_at", formatDate(m.getMeasuredAt()));
             JSONObject gps = new JSONObject();
             gps.put("lat", formatCoordinate(m.getLatitude()));

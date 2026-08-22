@@ -11,7 +11,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 
-import java.util.Collections;
 import java.util.List;
 
 import info.zamojski.soft.towercollector.MyApplication;
@@ -26,7 +25,7 @@ public class ExternalBroadcastSender implements Runnable {
     private static final String MEASUREMENTS_COLLECTED_ACTION = "info.zamojski.soft.towercollector.MEASUREMENTS_COLLECTED";
     private static final String MEASUREMENTS_EXTRA_KEY = "measurements";
 
-    private IJsonFormatter formatter;
+    private JsonBroadcastFormatter formatter;
 
     private void sendMeasurementsCollectedBroadcast(Measurement measurement) {
         Timber.i("sendMeasurementsCollectedBroadcast(): Sending broadcast to external apps");
@@ -34,7 +33,7 @@ public class ExternalBroadcastSender implements Runnable {
             formatter = new JsonBroadcastFormatter();
         }
         try {
-            String extra = formatter.formatList(Collections.singletonList(measurement));
+            String extra = formatter.format(measurement);
             // Send broadcast
             Intent intent = new Intent();
             intent.setAction(MEASUREMENTS_COLLECTED_ACTION);

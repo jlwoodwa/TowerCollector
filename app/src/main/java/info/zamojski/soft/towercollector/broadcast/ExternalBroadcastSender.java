@@ -4,6 +4,10 @@
 
 package info.zamojski.soft.towercollector.broadcast;
 
+import org.checkerframework.checker.PNL.qual.Label;
+import org.checkerframework.checker.PNL.qual.Sink;
+import org.checkerframework.checker.PNL.qual.Source;
+
 import android.content.Intent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -34,7 +38,7 @@ public class ExternalBroadcastSender implements Runnable {
             formatter = new JsonBroadcastFormatter();
         }
         try {
-            String extra = formatter.formatList(Collections.singletonList(measurement));
+            String extra = formatter.formatList(Collections.<@Label(sources = {Source.Approximate_location, Source.Precise_location}, sinks = {Sink.Ephemerally_processed, Sink.User_to_user_encrypted, Sink.Encrypted_in_transit, Sink.Sh_initiated_by_user, Sink.Sh_only_with_consent, Sink.Only_transfer_anonymous_data, Sink.Sh_with_service_providers, Sink.Collected_App_functionality, Sink.Collected_Analytics, Sink.Shared_App_functionality, Sink.Shared_Analytics}) Measurement>singletonList(measurement));
             // Send broadcast
             Intent intent = new Intent();
             intent.setAction(MEASUREMENTS_COLLECTED_ACTION);

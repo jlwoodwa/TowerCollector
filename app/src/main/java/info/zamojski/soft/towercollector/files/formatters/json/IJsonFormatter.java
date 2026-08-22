@@ -4,8 +4,6 @@
 
 package info.zamojski.soft.towercollector.files.formatters.json;
 
-import org.checkerframework.checker.PNL.qual.PolyLabel;
-
 import org.json.JSONException;
 
 import java.util.List;
@@ -16,7 +14,7 @@ public interface IJsonFormatter {
 
     String formatHeader();
 
-    @PolyLabel String formatList(@PolyLabel List<@PolyLabel Measurement> ms) throws JSONException;
+    String formatList(List<Measurement> ms) throws JSONException;
 
     String formatNewSegment();
 
